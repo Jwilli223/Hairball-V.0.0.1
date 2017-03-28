@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="600" height="35" tilewidth="14" tileheight="14" nextobjectid="29">
+ <tileset firstgid="1" name="DS DSi - Castlevania Dawn of Sorrow - Drawbridge" tilewidth="14" tileheight="14" spacing="2" margin="1" tilecount="765" columns="17">
+  <image source="DS DSi - Castlevania Dawn of Sorrow - Drawbridge.png" width="273" height="733"/>
+ </tileset>
+ <tileset firstgid="766" name="sewer_1" tilewidth="14" tileheight="14" spacing="2" margin="1" tilecount="352" columns="16">
+  <image source="sewer_1.png" width="256" height="352"/>
+ </tileset>
+ <tileset firstgid="1118" name="DS DSi - Castlevania Order of Ecclesia - Entrance Hall" tilewidth="14" tileheight="14" spacing="2" margin="1" tilecount="4235" columns="55">
+  <image source="DS DSi - Castlevania Order of Ecclesia - Entrance Hall.png" width="881" height="1243"/>
+ </tileset>
+ <tileset firstgid="5353" name="another_gary_w_roof_a4_by_rpg_customz-d8tnjz4" tilewidth="14" tileheight="14" spacing="2" margin="1" tilecount="40" columns="4">
+  <image source="another_gary_w_roof_a4_by_rpg_customz-d8tnjz4.png" width="64" height="160"/>
+ </tileset>
+ <tileset firstgid="5393" name="DS DSi - Castlevania Order of Ecclesia - Wygol Village" tilewidth="14" tileheight="14" spacing="2" margin="1" tilecount="2772" columns="66">
+  <image source="DS DSi - Castlevania Order of Ecclesia - Wygol Village.png" width="1056" height="672"/>
+ </tileset>
+ <tileset firstgid="8165" name="barn_a4_by_rpg_customz-d8tnk4v" tilewidth="14" tileheight="14" spacing="2" margin="1" tilecount="40" columns="4">
+  <image source="barn_a4_by_rpg_customz-d8tnk4v.png" width="64" height="160"/>
+ </tileset>
+ <tileset firstgid="8205" name="blue_wagon_a4_by_rpg_customz-d8tnkf6" tilewidth="14" tileheight="14" spacing="2" margin="1" tilecount="40" columns="4">
+  <image source="blue_wagon_a4_by_rpg_customz-d8tnkf6.png" width="64" height="160"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="600" height="35">
+  <data encoding="base64" compression="zlib">
+   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
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1">
+  <object id="10" x="0" y="475" width="3598" height="14"/>
+  <object id="16" x="1863" y="407" width="54" height="9"/>
+  <object id="17" x="1894" y="309" width="177" height="7"/>
+  <object id="18" x="2102" y="309" width="25" height="7"/>
+  <object id="19" x="2158" y="309" width="84" height="6"/>
+  <object id="23" x="2523" y="309" width="177" height="7"/>
+  <object id="24" x="2675" y="406" width="109" height="10"/>
+  <object id="25" x="2759" y="308" width="182" height="8"/>
+  <object id="26" x="2970" y="308" width="26" height="6"/>
+  <object id="27" x="3026" y="307" width="82" height="6"/>
+ </objectgroup>
+ <layer name="Tile Layer 2" width="600" height="35">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20ND6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4NEgvAAE=
+  </data>
+ </layer>
+</map>

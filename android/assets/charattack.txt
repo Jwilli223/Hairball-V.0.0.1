@@ -1,0 +1,19 @@
+charattack.png
+size: 66, 66
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1
+  rotate: false
+  xy: 46, 1
+  size: 18, 62
+  orig: 18, 62
+  offset: 0, 0
+  index: -1
+2
+  rotate: false
+  xy: 1, 1
+  size: 43, 64
+  orig: 43, 64
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,33 @@
+bcat.png
+size: 23, 57
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+0
+  rotate: false
+  xy: 1, 1
+  size: 21, 13
+  orig: 21, 13
+  offset: 0, 0
+  index: -1
+2
+  rotate: false
+  xy: 1, 16
+  size: 21, 12
+  orig: 21, 12
+  offset: 0, 0
+  index: -1
+3
+  rotate: false
+  xy: 1, 30
+  size: 21, 12
+  orig: 21, 12
+  offset: 0, 0
+  index: -1
+4
+  rotate: false
+  xy: 1, 44
+  size: 21, 12
+  orig: 21, 12
+  offset: 0, 0
+  index: -1

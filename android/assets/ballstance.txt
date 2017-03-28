@@ -1,0 +1,26 @@
+ballstance.png
+size: 73, 73
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+0
+  rotate: false
+  xy: 1, 1
+  size: 21, 50
+  orig: 21, 50
+  offset: 0, 0
+  index: -1
+1
+  rotate: true
+  xy: 24, 1
+  size: 21, 48
+  orig: 21, 48
+  offset: 0, 0
+  index: -1
+2
+  rotate: false
+  xy: 24, 24
+  size: 28, 46
+  orig: 28, 46
+  offset: 0, 0
+  index: -1

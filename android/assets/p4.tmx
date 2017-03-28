@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="350" height="18" tilewidth="12" tileheight="12" nextobjectid="4">
+ <tileset firstgid="1" name="sewer_1" tilewidth="12" tileheight="12" spacing="2" margin="1" tilecount="450" columns="18">
+  <image source="sewer_1.png" width="256" height="352"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="350" height="18">
+  <data encoding="base64" compression="zlib">
+   eJzt2CEOACAMA8Dx/1fsowSLIBmoIU6cr6homiMiAQAAAAAAAAAAAAAAAAAADmbUujMCAMDOhgUAAAAA6HPz0fK37g4BbxYZQcKu
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1">
+  <object id="1" x="1" y="204" width="1354" height="11"/>
+  <object id="2" x="181" y="155" width="106" height="12"/>
+  <object id="3" x="314" y="132" width="106" height="12"/>
+ </objectgroup>
+</map>

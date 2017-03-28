@@ -1,0 +1,40 @@
+skeletonsprite.png
+size: 148, 56
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+0
+  rotate: true
+  xy: 1, 1
+  size: 54, 51
+  orig: 54, 51
+  offset: 0, 0
+  index: -1
+4
+  rotate: false
+  xy: 123, 1
+  size: 24, 52
+  orig: 24, 52
+  offset: 0, 0
+  index: -1
+5
+  rotate: false
+  xy: 99, 1
+  size: 22, 53
+  orig: 22, 53
+  offset: 0, 0
+  index: -1
+6
+  rotate: false
+  xy: 78, 1
+  size: 19, 54
+  orig: 19, 54
+  offset: 0, 0
+  index: -1
+7
+  rotate: false
+  xy: 54, 1
+  size: 22, 54
+  orig: 22, 54
+  offset: 0, 0
+  index: -1
