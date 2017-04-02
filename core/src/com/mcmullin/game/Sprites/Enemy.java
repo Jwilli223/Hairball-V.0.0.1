@@ -36,8 +36,6 @@ public abstract class Enemy extends Sprite
     public abstract  void hitOnHead();
     public abstract void hitByEnemy(Enemy enemy);
 
-
-
     public void reverseVelocity(boolean x, boolean y)
     {
         if(x) {
@@ -67,9 +65,4 @@ public abstract class Enemy extends Sprite
         }
 
     }
-
-
-
-
-
 }

@@ -37,6 +37,9 @@ public class PlayScreen implements Screen {
     private TextureAtlas atlas2;
     private TextureAtlas atlas3;
     private TextureAtlas atlas4;
+    private TextureAtlas atlas5;
+    private TextureAtlas atlas6;
+    private TextureAtlas atlas7;
     private TextureAtlas atlas11;
     private OrthographicCamera gamecam;
     private Viewport gamePort;
@@ -67,20 +70,22 @@ public class PlayScreen implements Screen {
         //COMMENTS- all atlases load a sprite sheet. Variable declared above and getAtlases down below. These atlases are referenced in the sprite
         //classes to handle animations.
         atlas= new TextureAtlas("idrun.txt");
-        atlas2 = new TextureAtlas("skeletonsprite.txt");
+        atlas2 = new TextureAtlas("grass.txt");
         atlas3 = new TextureAtlas("ballstance.txt");
         atlas4 = new TextureAtlas("dead.txt");
+        atlas5 = new TextureAtlas("river.atlas");
+        atlas6 = new TextureAtlas("platform.atlas");
+        atlas7 = new TextureAtlas("squirrel.atlas");
         atlas11 = new TextureAtlas("jumper.txt");
         this.game = game;
         //COMMENTS- Camera set up
         gamecam = new OrthographicCamera();
         gamePort = new ExtendViewport(MyGdxGame.V_WIDTH / MyGdxGame.PPM,MyGdxGame.V_HEIGHT / MyGdxGame.PPM,gamecam);
-
         hud = new Hud(game.batch);
-
         maploader = new TmxMapLoader();
         //COMMENTS- Load tiled map file here
-        map = maploader.load("tunnel1.tmx");
+        map = maploader.load("SewerLevel.tmx");
+
         renderer = new OrthoCachedTiledMapRenderer(map, 1/ MyGdxGame.PPM);
         gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
         world = new World(new Vector2(0,-10), true);
@@ -89,7 +94,7 @@ public class PlayScreen implements Screen {
         player = new Char(this);
         world.setContactListener(new WorldContactListener());
         stateTime = 0;
-
+        //set custom touch input as input processor
         input = new TouchInputProcessor();
         Gdx.input.setInputProcessor(input);
     }
@@ -98,29 +103,38 @@ public class PlayScreen implements Screen {
     {
         return atlas;
     }
-
     public TextureAtlas getAtlas2()
     {
         return atlas2;
     }
-
     public TextureAtlas getAtlas3()
     {
         return atlas3;
     }
-
     public TextureAtlas getAtlas4()
     {
         return atlas4;
+    }
+    public TextureAtlas getAtlas5()
+    {
+        return atlas5;
+    }
+    public TextureAtlas getAtlas6()
+    {
+        return atlas6;
+    }
+    public TextureAtlas getAtlas7()
+    {
+        return atlas7;
     }
     public TextureAtlas getAtlas11()
     {
         return atlas11;
     }
+
     @Override
     public void show() {}
-    //INPUT HANDLING COMMENTS- This will need to be reworked. The positioning is hardcoded for the nexus 6p. The jump was manually created so that it initiates on a quick double click and the
-    // timing makes it controlled.
+
     public void handleInput(float dt)
     {
         if(player.currentState != Char.State.DEAD) {
@@ -151,7 +165,27 @@ public class PlayScreen implements Screen {
         hud.update(dt);
 
         //COMMENTS- this code is required to spawn enemies or whatever we choose to add using tiled
-       for(Enemy enemy : creator.getEnemies()) {
+        for(Enemy enemy : creator.getEnemies())
+        {
+            enemy.update(dt);
+            if(!enemy.isDestroyed() && enemy.getX() < player.getX() + 224 / MyGdxGame.PPM)
+                enemy.b2body.setActive(true);
+        }
+        for(Enemy enemy : creator.getEnemies2())
+        {
+            enemy.update(dt);
+            if(!enemy.isDestroyed() && enemy.getX() < player.getX() + 224 / MyGdxGame.PPM)
+                enemy.b2body.setActive(true);
+        }
+        for(Enemy enemy : creator.getEnemies3())
+        {
+            enemy.update(dt);
+            if(!enemy.isDestroyed() && enemy.getX() < player.getX() + 224 / MyGdxGame.PPM)
+                enemy.b2body.setActive(true);
+        }
+
+        for(Enemy enemy : creator.getEnemies4())
+        {
             enemy.update(dt);
             if(!enemy.isDestroyed() && enemy.getX() < player.getX() + 224 / MyGdxGame.PPM)
                 enemy.b2body.setActive(true);
@@ -190,6 +224,12 @@ public class PlayScreen implements Screen {
 
         //COMMNENTS- Required for enemy tiled spawn.
         for (Enemy enemy : creator.getEnemies())
+            enemy.draw(game.batch);
+        for (Enemy enemy : creator.getEnemies2())
+            enemy.draw(game.batch);
+        for (Enemy enemy : creator.getEnemies3())
+            enemy.draw(game.batch);
+        for (Enemy enemy : creator.getEnemies4())
             enemy.draw(game.batch);
 
         game.batch.end();
