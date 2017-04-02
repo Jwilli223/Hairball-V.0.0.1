@@ -46,6 +46,7 @@ public class Char extends Sprite {
     private static boolean beenHit;
     private static float anotherTimer;
     private static final int MAX_X_VELOCITY = 2; //maximum laft/right speed
+    private static boolean isTouched;
 
     public Char(PlayScreen screen)
     {
@@ -60,39 +61,34 @@ public class Char extends Sprite {
         runningRight = true;
         beenHit = false;
         anotherTimer = 0;
-
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
         //COMMENTS- Loads individual pictures from sprite sheets (android- assets, txt file related to getAtlas)
         //the green numbers represent the title of the image, and the numbers in blue are the dimensions
-        frames.add(new TextureRegion(screen.getAtlas().findRegion("2"), 0, 0, 55, 48));
-        frames.add(new TextureRegion(screen.getAtlas().findRegion("1"), 0, 0, 51, 47));
-        frames.add(new TextureRegion(screen.getAtlas().findRegion("5"), 0, 0, 56, 47));
-        frames.add(new TextureRegion(screen.getAtlas().findRegion("4"), 0, 0, 53, 48));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion("2"), 0, 0, 51, 47));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion("6"), 0, 0, 55, 47));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion("5"), 0, 0, 52, 48));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion("8"), 0, 0, 55, 47));
+        //frames.add(new TextureRegion(screen.getAtlas().findRegion("9"), 0, 0, 50, 46));
+
         //COMMENTS- defines animation and the 0.2 is the speed of the animation
         charRun = new Animation(0.2f, frames);
         frames.clear();
 
         int j = 0;
-
-        frames.add(new TextureRegion(screen.getAtlas11().findRegion("1"), 0, 0, 36, 46));
+        frames.add(new TextureRegion(screen.getAtlas11().findRegion("1"), 0, 0, 36, 45));
         frames.add(new TextureRegion(screen.getAtlas11().findRegion("2"), 0, 0, 51, 47));
-        frames.add(new TextureRegion(screen.getAtlas11().findRegion("3"), 0, 0, 52, 46));
-        frames.add(new TextureRegion(screen.getAtlas11().findRegion("4"), 0, 0, 58, 50));
-        frames.add(new TextureRegion(screen.getAtlas11().findRegion("5"), 0, 0, 50, 45));
+        frames.add(new TextureRegion(screen.getAtlas11().findRegion("3"), 0, 0, 52, 45));
+        frames.add(new TextureRegion(screen.getAtlas11().findRegion("4"), 0, 0, 58, 49));
+        frames.add(new TextureRegion(screen.getAtlas11().findRegion("5"), 0, 0, 50, 44));
         charJump = new Animation(0.1f,frames);
-
         Array<TextureRegion> frames2 = new Array<TextureRegion>();
-
         frames2.add(new TextureRegion(screen.getAtlas3().findRegion("0"), 0, 0, 21, 50));
         frames2.add(new TextureRegion(screen.getAtlas3().findRegion("2"), 0, 0, 28, 46));
-
         charDead = new TextureRegion(screen.getAtlas4().findRegion("3"), 0, 0, 41, 28);
-
         Array<TextureRegion> frames3 = new Array<TextureRegion>();
-
-        frames3.add(new TextureRegion(screen.getAtlas().findRegion("1"), 0, 0, 51, 47));
-        frames3.add(new TextureRegion(screen.getAtlas().findRegion("0"), 0, 0, 51, 44));
+        frames3.add(new TextureRegion(screen.getAtlas().findRegion("2"), 0, 0, 51, 47));
+        frames3.add(new TextureRegion(screen.getAtlas().findRegion("1"), 0, 0, 49, 44));
         charStand = new Animation(0.1f, frames3);
         defineChar();
         //COMMENTS- Sets size of Char
@@ -182,33 +178,37 @@ public class Char extends Sprite {
         }
     }
 
+    public static void setTouch(int touch)
+    {
+        if (touch == 1) {
+            Gdx.app.log("you have been", "booo");
+            isTouched = true;
+        }
+        isTouched = false;
+    }
+
     public void defineChar()
     {
-       // BOX2D body (circle)- deals with collision. Disable debug render in playscreen if you want to see
+        // BOX2D body (circle)- deals with collision. Disable debug render in playscreen if you want to see
         BodyDef bdef = new BodyDef();
-
         bdef.position.set(32 / MyGdxGame.PPM,32 / MyGdxGame.PPM);
-
-
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
-
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(6 / MyGdxGame.PPM);
+        shape.setRadius(16 / MyGdxGame.PPM);
         //COMMENTS- Assings the unique identifier to Char
         fdef.filter.categoryBits = MyGdxGame.CHAR_BIT;
         //COMMENTS- What the Char can collide with / touch
         fdef.filter.maskBits =MyGdxGame.GROUND_BIT |
-            MyGdxGame.ENEMY_BIT |
-            MyGdxGame.ENEMY_HEAD_BIT;
+                MyGdxGame.ENEMY_BIT | MyGdxGame.LOG_BIT |
+                MyGdxGame.ENEMY_HEAD_BIT;
         fdef.shape = shape;
         b2body.createFixture(fdef);
         EdgeShape head = new EdgeShape();
         head.set(new Vector2(-2 / MyGdxGame.PPM, 6 / MyGdxGame.PPM), new Vector2(2 / MyGdxGame.PPM, 6 / MyGdxGame.PPM));
         fdef.shape = head;
         fdef.isSensor = true;
-
         b2body.createFixture(fdef).setUserData("head");
     }
 

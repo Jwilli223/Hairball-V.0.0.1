@@ -1,6 +1,5 @@
 package com.mcmullin.game.Sprites;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,32 +8,31 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.mcmullin.game.MyGdxGame;
 import com.mcmullin.game.Screens.PlayScreen;
 
 /**
- * Created by Joe on 11/14/2016.
+ * Created by Joe on 3/1/2017.
  */
 
-public class Skeleton extends Enemy
+public class River extends Enemy
 {
     private float stateTime;
-
     private Animation walkAnimation;
     private Array<TextureRegion> frames;
 
-    public Skeleton(PlayScreen screen, float x, float y)
+    public River(PlayScreen screen, float x, float y)
     {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
-        frames.add(new TextureRegion(screen.getAtlas2().findRegion("0"), 0, 0, 66, 40));
-        frames.add(new TextureRegion(screen.getAtlas2().findRegion("1"), 0, 0, 56, 58));
-        frames.add(new TextureRegion(screen.getAtlas2().findRegion("2"), 0, 0, 65, 45));
-        walkAnimation = new Animation(2f, frames);
+
+        frames.add(new TextureRegion(screen.getAtlas5().findRegion("0"), 0, 0, 278, 38));
+        frames.add(new TextureRegion(screen.getAtlas5().findRegion("3"), 0, 0, 282, 32));
+        //frames.add(new TextureRegion(screen.getAtlas5().findRegion("2"), 0, 0, 65, 45));
+        walkAnimation = new Animation(.5f, frames);
         stateTime = 0;
-        setBounds(getX(),getY(),34 / MyGdxGame.PPM , 16 / MyGdxGame.PPM );
+        setBounds(getX(),getY(),282 / MyGdxGame.PPM , 15 / MyGdxGame.PPM );
     }
 
     public void update(float dt)
@@ -43,6 +41,7 @@ public class Skeleton extends Enemy
         //  b2body.setLinearVelocity(velocity);
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(walkAnimation.getKeyFrame(stateTime, true));
+
     }
 
 
@@ -61,8 +60,7 @@ public class Skeleton extends Enemy
         fdef.filter.maskBits = MyGdxGame.OBJECT_BIT;
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
-
-//COMMENTS- BOX2D shape that can be used for collision
+        //COMMENTS- BOX2D shape that can be used for collision
         PolygonShape head = new PolygonShape();
         Vector2[] vertice = new Vector2[4];
         vertice[0] = new Vector2(-8,8).scl(1/MyGdxGame.PPM);
@@ -81,12 +79,12 @@ public class Skeleton extends Enemy
         TextureRegion region;
         region = walkAnimation.getKeyFrame(stateTime, true);
         return region;
+
     }
     //COMMENTS- This and smartreverse make the enemy speed up and follow the character when in range
 
     public void draw(Batch batch)
     {
-
         super.draw(batch);
     }
 
@@ -106,3 +104,5 @@ public class Skeleton extends Enemy
 
     //}
 }
+
+
