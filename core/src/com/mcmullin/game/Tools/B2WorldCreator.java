@@ -70,6 +70,7 @@ public class B2WorldCreator {
             fdef.filter.categoryBits = MyGdxGame.OBJECT_BIT;
             body.createFixture(fdef);
         }
+
         //COMMENTS- Part 1 of skeleton spawning with tiled
         skeleton = new Array<Skeleton>();
         for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
@@ -133,9 +134,6 @@ public class B2WorldCreator {
         enemies.addAll(squirrel);
         return enemies;
     }
-
-
-
 }
 
 
