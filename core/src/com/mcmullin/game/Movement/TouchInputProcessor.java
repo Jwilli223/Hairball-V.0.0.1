@@ -45,9 +45,6 @@ public class TouchInputProcessor implements InputProcessor {
             inputs.get(pointer).setY(screenY);
             inputs.get(pointer).setTouched(false);
         }
-        if(button == 62) {
-
-        }
         return true;
     }
 
