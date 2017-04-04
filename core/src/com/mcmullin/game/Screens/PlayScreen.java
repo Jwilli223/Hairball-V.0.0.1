@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -25,7 +26,6 @@ import com.mcmullin.game.Tools.WorldContactListener;
 import com.mcmullin.game.Movement.TouchInputProcessor;
 import java.util.HashMap;
 import java.util.Map;
-
 
 /**
  * Created by Joe on 11/12/2016.
@@ -132,6 +132,7 @@ public class PlayScreen implements Screen {
         return atlas11;
     }
 
+
     @Override
     public void show() {}
 
@@ -139,7 +140,7 @@ public class PlayScreen implements Screen {
     {
         if(player.currentState != Char.State.DEAD) {
             //second finger tap or spacebar
-            if((input.isTouched(1) && input.isTouched(0))) { //jump key pressed
+            if((input.isTouched(1) && input.isTouched(0)) || Gdx.input.isKeyJustPressed(62)) { //jump key pressed
                 if (stateTime - jumpStartTime >= dt) { //check time between jumps
                     jumpStartTime = stateTime; //reset jump start time
                     player.charJump();//jump
@@ -151,6 +152,12 @@ public class PlayScreen implements Screen {
                 } else { //pressing left half of screen
                     player.charRunLeft();
                 }
+            }
+            // allow for keyboard controls (left and right arrow keys)
+            if(Gdx.input.isKeyPressed(22)){
+                player.charRunRight();
+            } else if (Gdx.input.isKeyPressed(21)){
+                player.charRunLeft();
             }
         }
     }
@@ -271,17 +278,14 @@ gamePort.update(width,height);
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override

@@ -30,7 +30,7 @@ public class StartScreen implements Screen
         this.game = game;
         viewport = new StretchViewport(MyGdxGame.V_WIDTH, MyGdxGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((MyGdxGame) game).batch);
-//COMMENTS- Below code is basically just adding text and formatting it
+        //COMMENTS- Below code is basically just adding text and formatting it
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
         Table table = new Table();
