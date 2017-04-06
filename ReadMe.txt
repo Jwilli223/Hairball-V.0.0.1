@@ -1,3 +1,5 @@
 This is hairball, an android game made in android studio by Jared, Jennie, Joe and Ruby
 
 Here is an update! heres more update!
+
+Ruby Changes
