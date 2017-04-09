@@ -3,6 +3,7 @@ package com.mcmullin.game.Sprites;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -20,18 +21,17 @@ import com.mcmullin.game.Screens.PlayScreen;
 
 public class Skeleton extends Enemy
 {
-    private float stateTime;
-
     private Animation walkAnimation;
     private Array<TextureRegion> frames;
 
     public Skeleton(PlayScreen screen, float x, float y)
     {
         super(screen, x, y);
+        atlas = new TextureAtlas("grass.txt");
         frames = new Array<TextureRegion>();
-        frames.add(new TextureRegion(screen.getAtlas2().findRegion("0"), 0, 0, 66, 40));
-        frames.add(new TextureRegion(screen.getAtlas2().findRegion("1"), 0, 0, 56, 58));
-        frames.add(new TextureRegion(screen.getAtlas2().findRegion("2"), 0, 0, 65, 45));
+        frames.add(new TextureRegion(atlas.findRegion("0"), 0, 0, 66, 40));
+        frames.add(new TextureRegion(atlas.findRegion("1"), 0, 0, 56, 58));
+        frames.add(new TextureRegion(atlas.findRegion("2"), 0, 0, 65, 45));
         walkAnimation = new Animation(2f, frames);
         stateTime = 0;
         setBounds(getX(),getY(),34 / MyGdxGame.PPM , 16 / MyGdxGame.PPM );

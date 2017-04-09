@@ -2,6 +2,7 @@ package com.mcmullin.game.Sprites;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -18,17 +19,16 @@ import com.mcmullin.game.Screens.PlayScreen;
 
 public class River extends Enemy
 {
-    private float stateTime;
     private Animation walkAnimation;
     private Array<TextureRegion> frames;
 
     public River(PlayScreen screen, float x, float y)
     {
         super(screen, x, y);
+        atlas = new TextureAtlas("river.atlas");
         frames = new Array<TextureRegion>();
-
-        frames.add(new TextureRegion(screen.getAtlas5().findRegion("0"), 0, 0, 278, 38));
-        frames.add(new TextureRegion(screen.getAtlas5().findRegion("3"), 0, 0, 282, 32));
+        frames.add(new TextureRegion(atlas.findRegion("0"), 0, 0, 278, 38));
+        frames.add(new TextureRegion(atlas.findRegion("3"), 0, 0, 282, 32));
         //frames.add(new TextureRegion(screen.getAtlas5().findRegion("2"), 0, 0, 65, 45));
         walkAnimation = new Animation(.5f, frames);
         stateTime = 0;

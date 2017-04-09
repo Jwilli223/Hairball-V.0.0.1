@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mcmullin.game.Levels.ForestLevel;
 import com.mcmullin.game.MyGdxGame;
 import com.mcmullin.game.Sprites.Char;
 
@@ -23,9 +24,10 @@ public class StartScreen implements Screen
 {
     private Viewport viewport;
     private Stage stage;
-    private Game game;
+    //private Game game;
+    private MyGdxGame game;
 
-    public StartScreen(Game game)
+    public StartScreen(MyGdxGame game)
     {
         this.game = game;
         viewport = new StretchViewport(MyGdxGame.V_WIDTH, MyGdxGame.V_HEIGHT, new OrthographicCamera());
@@ -53,11 +55,8 @@ public class StartScreen implements Screen
         //COMMENTS- If the user clicks/ touches the screen, it loads the main screen and disposes of the start screen.
         if (Gdx.input.justTouched())
         {
-            game.setScreen(new PlayScreen((MyGdxGame) game));
-
-
+            game.setScreen(new PlayScreen(game, new ForestLevel()));
             dispose();
-
         }
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

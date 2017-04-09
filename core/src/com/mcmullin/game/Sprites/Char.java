@@ -1,10 +1,12 @@
 package com.mcmullin.game.Sprites;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -23,35 +25,39 @@ import com.mcmullin.game.Screens.PlayScreen;
  */
 
 public class Char extends Sprite {
-
+    private static final int MAX_X_VELOCITY = 2; //maximum laft/right speed
+    //States
     public enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD};
-
     public State currentState;
     public State previousState;
-
+    //Game info
     public World world;
     public Body b2body;
+    private static float anotherTimer;
+    //Animations
     private Animation charStand;
     private TextureRegion charDead;
     private Animation charRun;
     private Animation charJump;
+    //State information
     private static boolean runningRight;
     private static boolean iAmDead;
     private static float stateTimer;
-
     public static final short DEAD_BIT = 1;
     private static int hitCount;
     private static int attackDC = 0;
-    private PlayScreen screen;
     private static boolean beenHit;
-    private static float anotherTimer;
-    private static final int MAX_X_VELOCITY = 2; //maximum laft/right speed
     private static boolean isTouched;
+    //Atlas'
+    private TextureAtlas runAtlas;
+    private TextureAtlas jumpAtlas;
+    private TextureAtlas standingAtlas;
+    private TextureAtlas deadAtlas;
 
     public Char(PlayScreen screen)
     {
-        super(screen.getAtlas().findRegion("1"));
-        this.screen = screen;
+        super(new TextureAtlas("idrun.txt").findRegion("1"));
+        //this.screen = screen;
         this.world = screen.getWorld();
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -61,14 +67,19 @@ public class Char extends Sprite {
         runningRight = true;
         beenHit = false;
         anotherTimer = 0;
+        //setup atlases
+        runAtlas = new TextureAtlas("idrun.txt");
+        jumpAtlas = new TextureAtlas("jumper.txt");
+        standingAtlas = new TextureAtlas("ballstance.txt");
+        deadAtlas = new TextureAtlas("dead.txt");
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
         //COMMENTS- Loads individual pictures from sprite sheets (android- assets, txt file related to getAtlas)
         //the green numbers represent the title of the image, and the numbers in blue are the dimensions
-        frames.add(new TextureRegion(screen.getAtlas().findRegion("2"), 0, 0, 51, 47));
-        frames.add(new TextureRegion(screen.getAtlas().findRegion("6"), 0, 0, 55, 47));
-        frames.add(new TextureRegion(screen.getAtlas().findRegion("5"), 0, 0, 52, 48));
-        frames.add(new TextureRegion(screen.getAtlas().findRegion("8"), 0, 0, 55, 47));
+        frames.add(new TextureRegion(runAtlas.findRegion("2"), 0, 0, 51, 47));
+        frames.add(new TextureRegion(runAtlas.findRegion("6"), 0, 0, 55, 47));
+        frames.add(new TextureRegion(runAtlas.findRegion("5"), 0, 0, 52, 48));
+        frames.add(new TextureRegion(runAtlas.findRegion("8"), 0, 0, 55, 47));
         //frames.add(new TextureRegion(screen.getAtlas().findRegion("9"), 0, 0, 50, 46));
 
         //COMMENTS- defines animation and the 0.2 is the speed of the animation
@@ -76,19 +87,19 @@ public class Char extends Sprite {
         frames.clear();
 
         int j = 0;
-        frames.add(new TextureRegion(screen.getAtlas11().findRegion("1"), 0, 0, 36, 45));
-        frames.add(new TextureRegion(screen.getAtlas11().findRegion("2"), 0, 0, 51, 47));
-        frames.add(new TextureRegion(screen.getAtlas11().findRegion("3"), 0, 0, 52, 45));
-        frames.add(new TextureRegion(screen.getAtlas11().findRegion("4"), 0, 0, 58, 49));
-        frames.add(new TextureRegion(screen.getAtlas11().findRegion("5"), 0, 0, 50, 44));
+        frames.add(new TextureRegion(jumpAtlas.findRegion("1"), 0, 0, 36, 45));
+        frames.add(new TextureRegion(jumpAtlas.findRegion("2"), 0, 0, 51, 47));
+        frames.add(new TextureRegion(jumpAtlas.findRegion("3"), 0, 0, 52, 45));
+        frames.add(new TextureRegion(jumpAtlas.findRegion("4"), 0, 0, 58, 49));
+        frames.add(new TextureRegion(jumpAtlas.findRegion("5"), 0, 0, 50, 44));
         charJump = new Animation(0.1f,frames);
         Array<TextureRegion> frames2 = new Array<TextureRegion>();
-        frames2.add(new TextureRegion(screen.getAtlas3().findRegion("0"), 0, 0, 21, 50));
-        frames2.add(new TextureRegion(screen.getAtlas3().findRegion("2"), 0, 0, 28, 46));
-        charDead = new TextureRegion(screen.getAtlas4().findRegion("3"), 0, 0, 41, 28);
+        frames2.add(new TextureRegion(standingAtlas.findRegion("0"), 0, 0, 21, 50));
+        frames2.add(new TextureRegion(standingAtlas.findRegion("2"), 0, 0, 28, 46));
+        charDead = new TextureRegion(deadAtlas.findRegion("3"), 0, 0, 41, 28);
         Array<TextureRegion> frames3 = new Array<TextureRegion>();
-        frames3.add(new TextureRegion(screen.getAtlas().findRegion("2"), 0, 0, 51, 47));
-        frames3.add(new TextureRegion(screen.getAtlas().findRegion("1"), 0, 0, 49, 44));
+        frames3.add(new TextureRegion(runAtlas.findRegion("2"), 0, 0, 51, 47));
+        frames3.add(new TextureRegion(runAtlas.findRegion("1"), 0, 0, 49, 44));
         charStand = new Animation(0.1f, frames3);
         defineChar();
         //COMMENTS- Sets size of Char
@@ -174,7 +185,6 @@ public class Char extends Sprite {
             iAmDead = true;
             stateTimer = 0;
             hitCount = 0;
-
         }
     }
 
@@ -183,6 +193,8 @@ public class Char extends Sprite {
         if (touch == 1) {
             Gdx.app.log("you have been", "booo");
             isTouched = true;
+        } else if (touch == -1) {
+
         }
         isTouched = false;
     }

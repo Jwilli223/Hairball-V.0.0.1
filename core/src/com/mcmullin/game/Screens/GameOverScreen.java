@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mcmullin.game.Levels.ForestLevel;
 import com.mcmullin.game.MyGdxGame;
 
 /**
@@ -34,21 +35,18 @@ public GameOverScreen(Game game)
     this.game = game;
     viewport = new StretchViewport(MyGdxGame.V_WIDTH, MyGdxGame.V_HEIGHT, new OrthographicCamera());
     stage = new Stage(viewport, ((MyGdxGame) game).batch);
-background = new Texture("gameover.png");
+    background = new Texture("gameover.png");
     Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
     Table table = new Table();
     table.center();
     table.setFillParent(true);
-Label gameOverLabel = new Label("GAME OVER", font);
+    Label gameOverLabel = new Label("GAME OVER", font);
     Label playAgainLabel = new Label("Click to Play Again", font);
     table.add(gameOverLabel).expandX();
-table.row();
+    table.row();
     table.add(playAgainLabel).expandX().padTop(10f);
     stage.addActor(table);
-
     batch = new SpriteBatch();
-
-
 }
     @Override
     public void show() {
@@ -62,24 +60,16 @@ table.row();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-
         batch.draw(background,0,0,MyGdxGame.V_WIDTH*10,MyGdxGame.V_HEIGHT*7 );
         batch.end();
 
         //COMMENTS- if you click / touch screen, opens playscreen, disposes game over screen
         if (Gdx.input.justTouched())
         {
-
-
-            game.setScreen(new PlayScreen((MyGdxGame) game));
+            game.setScreen(new PlayScreen((MyGdxGame) game, new ForestLevel()));
             dispose();
         }
-
-
-
-
-
-stage.draw();
+        stage.draw();
     }
 
 

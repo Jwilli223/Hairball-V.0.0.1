@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
@@ -16,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mcmullin.game.Levels.*;
 import com.mcmullin.game.MyGdxGame;
 import com.mcmullin.game.Scenes.Hud;
 import com.mcmullin.game.Sprites.Char;
@@ -24,8 +23,6 @@ import com.mcmullin.game.Sprites.Skeleton;
 import com.mcmullin.game.Tools.B2WorldCreator;
 import com.mcmullin.game.Tools.WorldContactListener;
 import com.mcmullin.game.Movement.TouchInputProcessor;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Joe on 11/12/2016.
@@ -33,14 +30,6 @@ import java.util.Map;
 
 public class PlayScreen implements Screen {
     private MyGdxGame game;
-    private TextureAtlas atlas;
-    private TextureAtlas atlas2;
-    private TextureAtlas atlas3;
-    private TextureAtlas atlas4;
-    private TextureAtlas atlas5;
-    private TextureAtlas atlas6;
-    private TextureAtlas atlas7;
-    private TextureAtlas atlas11;
     private OrthographicCamera gamecam;
     private Viewport gamePort;
     private Hud hud;
@@ -63,20 +52,14 @@ public class PlayScreen implements Screen {
     private int attackCount = 0;
     private boolean jumpB;
 
+    //The current level
+    private Level curLevel;
+    private boolean levelComplete;
+    //Catches touch input from users
     TouchInputProcessor input;
 
 
-    public PlayScreen(MyGdxGame game) {
-        //COMMENTS- all atlases load a sprite sheet. Variable declared above and getAtlases down below. These atlases are referenced in the sprite
-        //classes to handle animations.
-        atlas= new TextureAtlas("idrun.txt");
-        atlas2 = new TextureAtlas("grass.txt");
-        atlas3 = new TextureAtlas("ballstance.txt");
-        atlas4 = new TextureAtlas("dead.txt");
-        atlas5 = new TextureAtlas("river.atlas");
-        atlas6 = new TextureAtlas("platform.atlas");
-        atlas7 = new TextureAtlas("squirrel.atlas");
-        atlas11 = new TextureAtlas("jumper.txt");
+    public PlayScreen(MyGdxGame game, Level curLevel) {
         this.game = game;
         //COMMENTS- Camera set up
         gamecam = new OrthographicCamera();
@@ -84,7 +67,9 @@ public class PlayScreen implements Screen {
         hud = new Hud(game.batch);
         maploader = new TmxMapLoader();
         //COMMENTS- Load tiled map file here
-        map = maploader.load("SewerLevel.tmx");
+        map = maploader.load(curLevel.getMap());
+        this.curLevel = curLevel;
+        levelComplete = false;
 
         renderer = new OrthoCachedTiledMapRenderer(map, 1/ MyGdxGame.PPM);
         gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
@@ -98,40 +83,6 @@ public class PlayScreen implements Screen {
         input = new TouchInputProcessor();
         Gdx.input.setInputProcessor(input);
     }
-
-    public TextureAtlas getAtlas()
-    {
-        return atlas;
-    }
-    public TextureAtlas getAtlas2()
-    {
-        return atlas2;
-    }
-    public TextureAtlas getAtlas3()
-    {
-        return atlas3;
-    }
-    public TextureAtlas getAtlas4()
-    {
-        return atlas4;
-    }
-    public TextureAtlas getAtlas5()
-    {
-        return atlas5;
-    }
-    public TextureAtlas getAtlas6()
-    {
-        return atlas6;
-    }
-    public TextureAtlas getAtlas7()
-    {
-        return atlas7;
-    }
-    public TextureAtlas getAtlas11()
-    {
-        return atlas11;
-    }
-
 
     @Override
     public void show() {}
@@ -167,36 +118,12 @@ public class PlayScreen implements Screen {
         handleInput(dt);
 
         world.step(1/60f, 6, 2);
-
+        //update character
         player.update(dt);
+        //update hud
         hud.update(dt);
-
-        //COMMENTS- this code is required to spawn enemies or whatever we choose to add using tiled
-        for(Enemy enemy : creator.getEnemies())
-        {
-            enemy.update(dt);
-            if(!enemy.isDestroyed() && enemy.getX() < player.getX() + 224 / MyGdxGame.PPM)
-                enemy.b2body.setActive(true);
-        }
-        for(Enemy enemy : creator.getEnemies2())
-        {
-            enemy.update(dt);
-            if(!enemy.isDestroyed() && enemy.getX() < player.getX() + 224 / MyGdxGame.PPM)
-                enemy.b2body.setActive(true);
-        }
-        for(Enemy enemy : creator.getEnemies3())
-        {
-            enemy.update(dt);
-            if(!enemy.isDestroyed() && enemy.getX() < player.getX() + 224 / MyGdxGame.PPM)
-                enemy.b2body.setActive(true);
-        }
-
-        for(Enemy enemy : creator.getEnemies4())
-        {
-            enemy.update(dt);
-            if(!enemy.isDestroyed() && enemy.getX() < player.getX() + 224 / MyGdxGame.PPM)
-                enemy.b2body.setActive(true);
-        }
+        //update level
+        curLevel.update(player, dt);
 
         getPlayerX(dt);
 
@@ -220,30 +147,31 @@ public class PlayScreen implements Screen {
         Gdx.gl.glEnable(GL20.GL_BLEND); //enable transparent images
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        //render
         renderer.render();
-
         //b2dr.render(world, gamecam.combined); //box2d debug render - Can uncomment and it shows the box2d debug lines/shapes
-        game.batch.enableBlending();
+        game.batch.enableBlending(); //allows multiple tiled tile layers to draw over eachother
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
+        //render character
         player.draw(game.batch);
-
-        //COMMNENTS- Required for enemy tiled spawn.
-        for (Enemy enemy : creator.getEnemies())
-            enemy.draw(game.batch);
-        for (Enemy enemy : creator.getEnemies2())
-            enemy.draw(game.batch);
-        for (Enemy enemy : creator.getEnemies3())
-            enemy.draw(game.batch);
-        for (Enemy enemy : creator.getEnemies4())
-            enemy.draw(game.batch);
-
+        //render current level
+        curLevel.render(game);
         game.batch.end();
-
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        //draw hud
         hud.stage.draw();
 
+        //if the level has been completed, move on to the next level
+        if(levelComplete) {
+            setCurLevel(curLevel.getNextMap());
+        }
+
+        //handles joes level, if the player gets past x=3 goto next level
+        if(player.getX() >= 3 && curLevel.getMap().equals("tunnel1.tmx")) {
+            game.setScreen(new PlayScreen(game, new SewerLevel()));
+            dispose();
+        }
         //COMMENTS- if the player dies, sets screen to game over, disposes playscreen
         if(gameOver())
         {
@@ -257,6 +185,31 @@ public class PlayScreen implements Screen {
         if (player.currentState == Char.State.DEAD)
             return true;
         return false;
+    }
+
+    public void setLevelComplete(boolean complete) {
+        levelComplete = complete;
+    }
+
+    public Level getCurLevel() {
+        return curLevel;
+    }
+
+    //Sets the screen to the level passed to it
+    //this is called when the "EOL" marker is hit in
+    //any level. If the given level is null the end screen
+    //is shown.
+    public void setCurLevel(String level) {
+        if(level == null) {
+            game.setScreen(new GameOverScreen(game));
+            dispose();
+        } else if(level.equals("tunnel1.tmx")) {
+            game.setScreen(new PlayScreen(game, new ForestLevel()));
+            dispose();
+        } else if(level.equals("SewerLevel.tmx")) {
+            game.setScreen(new PlayScreen(game, new SewerLevel()));
+            dispose();
+        }
     }
 
     @Override
@@ -277,16 +230,13 @@ gamePort.update(width,height);
 
 
     @Override
-    public void pause() {
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-    }
+    public void resume() {}
 
     @Override
-    public void hide() {
-    }
+    public void hide() {}
 
     @Override
     public void dispose() {
@@ -295,6 +245,5 @@ gamePort.update(width,height);
         world.dispose();
         b2dr.dispose();
         hud.dispose();
-
     }
 }
