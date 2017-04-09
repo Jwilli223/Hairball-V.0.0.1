@@ -1,15 +1,13 @@
 package com.mcmullin.game.Sprites;
 
-
 import com.badlogic.gdx.graphics.g2d.Sprite;
-
 import com.mcmullin.game.Screens.PlayScreen;
 
 /**
  * Created by Jared on 4/8/2017.
  */
 
-public class levelEnd extends Sprite{
+public class levelEnd extends Sprite {
     PlayScreen screen;
 
     public levelEnd (PlayScreen screen, float x, float y) {

@@ -58,7 +58,6 @@ public class PlayScreen implements Screen {
     //Catches touch input from users
     TouchInputProcessor input;
 
-
     public PlayScreen(MyGdxGame game, Level curLevel) {
         this.game = game;
         //COMMENTS- Camera set up
@@ -87,8 +86,7 @@ public class PlayScreen implements Screen {
     @Override
     public void show() {}
 
-    public void handleInput(float dt)
-    {
+    public void handleInput(float dt) {
         if(player.currentState != Char.State.DEAD) {
             //second finger tap or spacebar
             if((input.isTouched(1) && input.isTouched(0)) || Gdx.input.isKeyJustPressed(62)) { //jump key pressed
@@ -112,8 +110,8 @@ public class PlayScreen implements Screen {
             }
         }
     }
-    public void update(float dt)
-    {
+
+    public void update(float dt) {
         stateTime += dt;
         handleInput(dt);
 
@@ -180,8 +178,7 @@ public class PlayScreen implements Screen {
         }
     }
 
-    public boolean gameOver()
-    {
+    public boolean gameOver() {
         if (player.currentState == Char.State.DEAD)
             return true;
         return false;

@@ -36,15 +36,11 @@ public class SewerLevel extends Level{
         //COMMENTS- This creates the ground in tiled
         for(MapLayer layer: map.getLayers()) {
             if(layer.getName().equals("platforms")) { //builds platforms layer
-                for(MapObject object: layer.getObjects().getByType(RectangleMapObject.class))
-                {
+                for(MapObject object: layer.getObjects().getByType(RectangleMapObject.class)) {
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
                     bdef.type = BodyDef.BodyType.StaticBody;
                     bdef.position.set((rect.getX() + rect.getWidth() / 2) / MyGdxGame.PPM, (rect.getY() + rect.getHeight() / 2) / MyGdxGame.PPM);
-
                     body = world.createBody(bdef);
-
                     shape.setAsBox(rect.getWidth() / 2 / MyGdxGame.PPM, rect.getHeight() / 2 / MyGdxGame.PPM);
                     fdef.shape = shape;
                     body.createFixture(fdef);
@@ -61,6 +57,5 @@ public class SewerLevel extends Level{
         end.update(player);
     }
 
-    public void render(MyGdxGame game){
-    }
+    public void render(MyGdxGame game){}
 }
