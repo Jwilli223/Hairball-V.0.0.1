@@ -34,6 +34,7 @@ public class ForestLevel extends Level{
     public ForestLevel() {
         this.map = "tunnel1.tmx";
         this.nextMap = "SewerLevel.tmx";
+        this.levelName = "Forest of Solitude";
     }
 
     public void create(PlayScreen screen) {
