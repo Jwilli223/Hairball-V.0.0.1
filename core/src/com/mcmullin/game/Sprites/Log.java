@@ -2,6 +2,7 @@ package com.mcmullin.game.Sprites;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -17,16 +18,15 @@ import com.mcmullin.game.Screens.PlayScreen;
  */
 
 public class Log extends Enemy {
-    private float stateTime;
-
     private Animation walkAnimation;
     private Array<TextureRegion> frames;
 
     public Log(PlayScreen screen, float x, float y)
     {
         super(screen, x, y);
+        atlas = new TextureAtlas("platform.atlas");
         frames = new Array<TextureRegion>();
-        frames.add(new TextureRegion(screen.getAtlas6().findRegion("Log"), 0, 0, 122, 48));
+        frames.add(new TextureRegion(atlas.findRegion("Log"), 0, 0, 122, 48));
         walkAnimation = new Animation(.1f, frames);
         stateTime = 0;
         setBounds(getX(),getY(),122 / MyGdxGame.PPM , 48 / MyGdxGame.PPM );
@@ -88,11 +88,7 @@ public class Log extends Enemy {
     }
 
     @Override
-    public void hitOnHead()
-
-    {
-
-    }
+    public void hitOnHead() {}
 
     @Override
     public void hitByEnemy(Enemy enemy) {

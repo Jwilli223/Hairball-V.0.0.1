@@ -3,6 +3,7 @@ package com.mcmullin.game.Sprites;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -19,6 +20,8 @@ public abstract class Enemy extends Sprite
 
     protected World world;
     protected PlayScreen screen;
+    protected TextureAtlas atlas;
+    protected float stateTime;
     public Body b2body;
     public Vector2 velocity;
     protected boolean destroyed;

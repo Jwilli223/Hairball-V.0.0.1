@@ -2,6 +2,7 @@ package com.mcmullin.game.Sprites;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -17,16 +18,16 @@ import com.mcmullin.game.Screens.PlayScreen;
  */
 
 public class Squirrel extends Enemy {
-    private float stateTime;
     private Animation walkAnimation;
     private Array<TextureRegion> frames;
 
     public Squirrel(PlayScreen screen, float x, float y)
     {
         super(screen, x, y);
+        atlas = new TextureAtlas("squirrel.atlas");
         frames = new Array<TextureRegion>();
-        frames.add(new TextureRegion(screen.getAtlas7().findRegion("0"), 0, 0, 52, 21));
-        frames.add(new TextureRegion(screen.getAtlas7().findRegion("1"), 0, 0, 45, 21));
+        frames.add(new TextureRegion(atlas.findRegion("0"), 0, 0, 52, 21));
+        frames.add(new TextureRegion(atlas.findRegion("1"), 0, 0, 45, 21));
         walkAnimation = new Animation(.75f, frames);
         stateTime = 0;
         setBounds(getX(),getY(),34 / MyGdxGame.PPM , 16 / MyGdxGame.PPM );
