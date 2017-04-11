@@ -60,7 +60,7 @@ public class Char extends Sprite {
         previousState = State.STANDING;
         stateTimer = 0;
         hitCount = 0;
-        iAmDead = false;
+        iAmDead = false; //set to true to test game over screen until we have death working
         runningRight = true;
         beenHit = false;
         anotherTimer = 0;
