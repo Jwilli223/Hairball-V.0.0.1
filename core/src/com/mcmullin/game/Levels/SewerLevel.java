@@ -23,6 +23,7 @@ public class SewerLevel extends Level{
     public SewerLevel() {
         this.map = "SewerLevel.tmx";
         this.nextMap = null; //currently last map
+        this.levelName = "Dank Sewer";
     }
 
     public void create(PlayScreen screen) {
