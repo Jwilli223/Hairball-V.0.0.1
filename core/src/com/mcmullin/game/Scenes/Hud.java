@@ -17,6 +17,8 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mcmullin.game.MyGdxGame;
+import com.mcmullin.game.Levels.*;
+import com.mcmullin.game.Screens.PlayScreen;
 
 /**
  * Created by Joe on 11/12/2016.
@@ -29,6 +31,10 @@ public class Hud implements Disposable {
     private Integer worldTimer;
     private float timeCount;
     private Integer score;
+    private Level curLevel;
+    private String levelName;
+
+
 
     Label countdownLabel;
     Label timeLabel;
@@ -39,8 +45,7 @@ public class Hud implements Disposable {
 
     Integer minutes;
 
-
-    public Hud(SpriteBatch sb)
+    public Hud(SpriteBatch sb, Level curLevel)
     {
         worldTimer = 0;
         timeCount = 0;
@@ -48,44 +53,48 @@ public class Hud implements Disposable {
         stage = new Stage(viewport, sb);
         minutes = 0;
 
-        Table table = new Table(); //Create the table for the hud
-        table.top();               //Set the table placement as the top of the screen
-        table.setFillParent(true); //Make the table the size of the screen
 
+
+        this.curLevel = curLevel;
+        levelName = curLevel.getLevelName();
         countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label("Brick-land", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        levelLabel = new Label(levelName, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         worldLabel =new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         hbLabel = new Label("HAIRBALL", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         placeHolderLabel = new Label("", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         Image upImg = new Image(new Texture("JennieAssets/UpButton.png"));
-        upImg.setSize(50,50);
+        upImg.setSize(((int)(Gdx.graphics.getHeight()* 0.05)),((int)(Gdx.graphics.getHeight()* 0.05)));
         Image leftImg = new Image(new Texture("JennieAssets/LeftButton.png"));
-        leftImg.setSize(50,50);
+        leftImg.setSize(((int)(Gdx.graphics.getHeight()* 0.05)),((int)(Gdx.graphics.getHeight()* 0.05)));
         Image rightImg = new Image(new Texture("JennieAssets/RightButton.png"));
-        rightImg.setSize(50,50);
-        table.add(hbLabel).expandX().padTop(10);
-        table.add(worldLabel).expandX().padTop(10);
-        table.add(timeLabel).expandX().padTop(10);
+        rightImg.setSize(((int)(Gdx.graphics.getHeight()* 0.05)),((int)(Gdx.graphics.getHeight()* 0.05)));
+
+        //stage.setDebugAll(true); //Show table for debugging
+
+        //Set up the table
+        Table table = new Table(); //Create the table for the hud
+        table.top();               //Set the table placement as the top of the screen
+        table.setFillParent(true); //Make the table the size of the screen
+        table.add(hbLabel).expandX().padTop(((int)(Gdx.graphics.getHeight()* 0.01))).padLeft(((int)(Gdx.graphics.getHeight()* 0.011)));
+        table.add(worldLabel).expandX().padTop(((int)(Gdx.graphics.getHeight()* 0.01)));
+        table.add(timeLabel).expandX().padTop(((int)(Gdx.graphics.getHeight()* 0.01)));
         table.row(); //everything below this will be on a new row
         table.add(placeHolderLabel).expandX();
         table.add(levelLabel).expandX();
         table.add(countdownLabel).expandX();
-        table.row();
-        table.row().pad(145,145,5,145);
-        table.add(leftImg).size(leftImg.getWidth(),leftImg.getHeight()).padRight(300);
-        table.add();
-        table.add(rightImg).size(rightImg.getWidth(),rightImg.getHeight()).padLeft(300);
-        table.row().padBottom(5);
+        table.row().padTop(((int)(Gdx.graphics.getHeight()* 0.13))).padBottom(((int)(Gdx.graphics.getHeight()* 0.05)));
+        table.add(upImg).size(upImg.getWidth(),upImg.getHeight()).padLeft(((int)(Gdx.graphics.getWidth()* 0.01)));
+        table.add(leftImg).size(leftImg.getWidth(),leftImg.getHeight()).padLeft(((int)(Gdx.graphics.getWidth()* 0.13)));
+        table.add(rightImg).size(rightImg.getWidth(),rightImg.getHeight()).padRight(((int)(Gdx.graphics.getWidth()* 0.01))).padLeft(((int)(Gdx.graphics.getWidth()* 0.01)));
         stage.addActor(table);
-
-
 
 
     }
 
     public void update(float dt)
     {
+
         timeCount+=dt;
         if (timeCount >= 1){
             worldTimer++;
