@@ -101,6 +101,52 @@ public class Hud implements Disposable {
         stage.addActor(table);
     }
 
+    //returns the X coordinate of the given button
+    //button cases follow class constant rules from playscreen
+    //UP = 0, LEFT = 1, RIGHT = 2
+    public float getbuttonX(int button) {
+        float x;
+        switch (button) {
+            case 0:
+                x = upImg.getX();
+                break;
+            case 1:
+                x = leftImg.getX();
+                break;
+            case 2:
+                x = rightImg.getX();
+                break;
+            default:
+                x = -1; //invalid button
+        }
+        return x;
+    }
+
+    //returns the Y coordinate of the given button
+    //button cases follow class constant rules from playscreen
+    //UP = 0, LEFT = 1, RIGHT = 2
+    public float getbuttonY(int button) {
+        float y;
+        switch (button) {
+            case 0:
+                y = upImg.getY() * 10;
+                break;
+            case 1:
+                y = leftImg.getY() * 10;
+                break;
+            case 2:
+                y = rightImg.getY() * 10;
+                break;
+            default:
+                y = -1; //invalid button
+        }
+        return y;
+    }
+
+    public int getButWidthHeight() {
+        return buttonWH;
+    }
+
     public void update(float dt)
     {
         timeCount+=dt;
