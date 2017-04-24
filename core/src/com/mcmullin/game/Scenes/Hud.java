@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -27,14 +28,17 @@ import com.mcmullin.game.Screens.PlayScreen;
 public class Hud implements Disposable {
     public Stage stage;
     private Viewport viewport;
+    private int width = Gdx.graphics.getWidth();
+    private int height = Gdx.graphics.getHeight();
+    private int buttonWH = (height / 100) * 20; //20% screen height
+    private int perHeight = height / 100; //1% height
+    private int perWidth = width / 100; //1% width
 
     private Integer worldTimer;
     private float timeCount;
-    private Integer score;
-    private Level curLevel;
     private String levelName;
 
-
+    private Image upImg, leftImg, rightImg;
 
     Label countdownLabel;
     Label timeLabel;
@@ -49,26 +53,29 @@ public class Hud implements Disposable {
     {
         worldTimer = 0;
         timeCount = 0;
-        viewport = new ExtendViewport(MyGdxGame.V_WIDTH,MyGdxGame.V_HEIGHT, new OrthographicCamera());
+        //viewport = new ExtendViewport(MyGdxGame.V_WIDTH,MyGdxGame.V_HEIGHT, new OrthographicCamera());
+        viewport = new ExtendViewport(width, height, new OrthographicCamera());
         stage = new Stage(viewport, sb);
         minutes = 0;
 
+        FreeTypeFontGenerator fontGen = new FreeTypeFontGenerator(Gdx.files.internal("JennieAssets/bebasFont.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter fontParam = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParam.size = perHeight * 5;
+        BitmapFont font = fontGen.generateFont(fontParam);
 
-
-        this.curLevel = curLevel;
         levelName = curLevel.getLevelName();
-        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label(levelName, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        worldLabel =new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        hbLabel = new Label("HAIRBALL", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        placeHolderLabel = new Label("", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        Image upImg = new Image(new Texture("JennieAssets/UpButton.png"));
-        upImg.setSize(((int)(Gdx.graphics.getHeight()* 0.05)),((int)(Gdx.graphics.getHeight()* 0.05)));
-        Image leftImg = new Image(new Texture("JennieAssets/LeftButton.png"));
-        leftImg.setSize(((int)(Gdx.graphics.getHeight()* 0.05)),((int)(Gdx.graphics.getHeight()* 0.05)));
-        Image rightImg = new Image(new Texture("JennieAssets/RightButton.png"));
-        rightImg.setSize(((int)(Gdx.graphics.getHeight()* 0.05)),((int)(Gdx.graphics.getHeight()* 0.05)));
+        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(font, Color.WHITE));
+        timeLabel = new Label("TIME", new Label.LabelStyle(font, Color.WHITE));
+        levelLabel = new Label(levelName, new Label.LabelStyle(font, Color.WHITE));
+        worldLabel =new Label("WORLD", new Label.LabelStyle(font, Color.WHITE));
+        hbLabel = new Label("HAIRBALL", new Label.LabelStyle(font, Color.WHITE));
+        placeHolderLabel = new Label("", new Label.LabelStyle(font, Color.WHITE));
+        upImg = new Image(new Texture("JennieAssets/UpButton.png"));
+        upImg.setSize(buttonWH, buttonWH);
+        leftImg = new Image(new Texture("JennieAssets/LeftButton.png"));
+        leftImg.setSize(buttonWH, buttonWH);
+        rightImg = new Image(new Texture("JennieAssets/RightButton.png"));
+        rightImg.setSize(buttonWH, buttonWH);
 
         //stage.setDebugAll(true); //Show table for debugging
 
@@ -76,25 +83,26 @@ public class Hud implements Disposable {
         Table table = new Table(); //Create the table for the hud
         table.top();               //Set the table placement as the top of the screen
         table.setFillParent(true); //Make the table the size of the screen
-        table.add(hbLabel).expandX().padTop(((int)(Gdx.graphics.getHeight()* 0.01))).padLeft(((int)(Gdx.graphics.getHeight()* 0.011)));
-        table.add(worldLabel).expandX().padTop(((int)(Gdx.graphics.getHeight()* 0.01)));
-        table.add(timeLabel).expandX().padTop(((int)(Gdx.graphics.getHeight()* 0.01)));
-        table.row(); //everything below this will be on a new row
+        //used for debugging shows table borders
+        //table.debugAll();
+        table.add(hbLabel).expandX().padTop(perHeight * 2).padLeft(perWidth * 5);
+        table.add(worldLabel).expandX().padTop(perHeight * 2);
+        table.add(timeLabel).expandX().padTop(perHeight * 2);
+        //new row
+        table.row();
         table.add(placeHolderLabel).expandX();
         table.add(levelLabel).expandX();
         table.add(countdownLabel).expandX();
-        table.row().padTop(((int)(Gdx.graphics.getHeight()* 0.13))).padBottom(((int)(Gdx.graphics.getHeight()* 0.05)));
-        table.add(upImg).size(upImg.getWidth(),upImg.getHeight()).padLeft(((int)(Gdx.graphics.getWidth()* 0.01)));
-        table.add(leftImg).size(leftImg.getWidth(),leftImg.getHeight()).padLeft(((int)(Gdx.graphics.getWidth()* 0.13)));
-        table.add(rightImg).size(rightImg.getWidth(),rightImg.getHeight()).padRight(((int)(Gdx.graphics.getWidth()* 0.01))).padLeft(((int)(Gdx.graphics.getWidth()* 0.01)));
+        //new row
+        table.row().padTop(perHeight * 65).padBottom(perHeight * 2);
+        table.add(upImg).size(upImg.getWidth(),upImg.getHeight()).padLeft(perWidth * 2);
+        table.add(leftImg).size(leftImg.getWidth(),leftImg.getHeight()).padLeft(perWidth * 65);
+        table.add(rightImg).size(rightImg.getWidth(),rightImg.getHeight()).padRight(perWidth * 2).padLeft(perWidth * 2);
         stage.addActor(table);
-
-
     }
 
     public void update(float dt)
     {
-
         timeCount+=dt;
         if (timeCount >= 1){
             worldTimer++;
@@ -106,7 +114,6 @@ public class Hud implements Disposable {
             countdownLabel.setText(String.format("%02d:%02d", minutes,worldTimer));
             timeCount=0;
         }
-
     }
 
     @Override
