@@ -29,6 +29,10 @@ import com.mcmullin.game.Movement.TouchInputProcessor;
  */
 
 public class PlayScreen implements Screen {
+    //constants to denote hud buttons for use in input handling
+    private static final int UP = 0, LEFT = 1, RIGHT = 2;
+
+
     private MyGdxGame game;
     private OrthographicCamera gamecam;
     private Viewport gamePort;
@@ -42,15 +46,8 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
     private B2WorldCreator creator;
     private static Char player;
-    private int activeTouch = 0;
     private float stateTime;
     private float jumpStartTime; //time a jump started
-    private float stateTimeCompare;
-    private float stateTimeCompare2;
-    private float stateTimeCompare3;
-    boolean justTouched = Gdx.input.justTouched();
-    private int attackCount = 0;
-    private boolean jumpB;
 
     //The current level
     private Level curLevel;
@@ -88,25 +85,23 @@ public class PlayScreen implements Screen {
 
     public void handleInput(float dt) {
         if(player.currentState != Char.State.DEAD) {
-            //second finger tap or spacebar
-            if((input.isTouched(1) && input.isTouched(0)) || Gdx.input.isKeyJustPressed(62)) { //jump key pressed
-                if (stateTime - jumpStartTime >= dt) { //check time between jumps
-                    jumpStartTime = stateTime; //reset jump start time
-                    player.charJump();//jump
-                }
-            }
             if (input.isTouched(0)) {
-                if (input.inputX(0) > (Gdx.graphics.getWidth() / 2)) { //pressing right half of screen
-                    player.charRunRight();
-                } else { //pressing left half of screen
-                    player.charRunLeft();
-                }
+                inputAct(0, dt);
+            }
+            if(input.isTouched(1)) {
+                inputAct(1, dt);
             }
             // allow for keyboard controls (left and right arrow keys)
             if(Gdx.input.isKeyPressed(22)){
                 player.charRunRight();
             } else if (Gdx.input.isKeyPressed(21)){
                 player.charRunLeft();
+            }
+            if(Gdx.input.isKeyJustPressed(62)) { //jump key pressed
+                if (stateTime - jumpStartTime >= dt) { //check time between jumps
+                    jumpStartTime = stateTime; //reset jump start time
+                    player.charJump();//jump
+                }
             }
         }
     }
@@ -209,6 +204,48 @@ public class PlayScreen implements Screen {
         }
     }
 
+    //checks the x and y coordinates of the given input
+    //against the area of the given button, if it is within
+    //the bounds of the button return true
+    //uses class constant buttons UP, LEFT and RIGHT as button
+    public boolean goodPress(float x, float y, int button) {
+        int buttonWH = hud.getButWidthHeight();
+        //get data for button x dimentions
+        float buttonX = hud.getbuttonX(button);
+        float buttonFarX = buttonX + buttonWH;
+        //get data for button y dimentions
+        float buttonY = hud.getbuttonY(button);
+        float buttonFarY = buttonY - buttonWH;
+        //checks if given x & y are in bounds of button
+        boolean goodX = x >= buttonX && x <= buttonFarX;
+        boolean goodY = y <= buttonY && y >= buttonFarY;
+        //if both values are within button return true
+        if(goodX && goodY) {
+            return true;
+        }
+        return false;
+    }
+
+    //calls actions on the character when input is recieved
+    //pointer is the touch input the user would like to check against
+    //this assumes that the pointer has valid data attached to it
+    public void inputAct(int pointer, float dt) {
+        //coordinates of the touch input
+        float inX = input.inputX(pointer);
+        float inY = input.inputY(pointer);
+        //check if input should cause an action and call the action
+        if(goodPress(inX, inY, UP)) {
+            if (stateTime - jumpStartTime >= dt) { //check time between jumps
+                jumpStartTime = stateTime; //reset jump start time
+                player.charJump();//jump
+            }
+        } else if(goodPress(inX, inY, LEFT)) {
+            player.charRunLeft();
+        } else if (goodPress(inX, inY, RIGHT)) {
+            player.charRunRight();
+        }
+    }
+
     @Override
     public void resize(int width, int height)
     {
@@ -224,7 +261,6 @@ gamePort.update(width,height);
     {
         return world;
     }
-
 
     @Override
     public void pause() {}
