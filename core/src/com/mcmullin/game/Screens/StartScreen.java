@@ -1,23 +1,18 @@
 package com.mcmullin.game.Screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mcmullin.game.Levels.ForestLevel;
+import com.mcmullin.game.Levels.*;
 import com.mcmullin.game.MyGdxGame;
-import com.mcmullin.game.Sprites.Char;
+
 
 /**
  * Created by Joe on 11/13/2016.
@@ -55,8 +50,8 @@ public class StartScreen implements Screen
         //COMMENTS- If the user clicks/ touches the screen, it loads the main screen and disposes of the start screen.
         if (Gdx.input.justTouched())
         {
-        game.setScreen(new PlayScreen(game, new ForestLevel()));
-
+            game.setScreen(new PlayScreen(game, new SewerLevel()));
+            //game.setScreen(new PlayScreen(game, new ForestLevel()));
             dispose();
         }
         Gdx.gl.glClearColor(0,0,0,1);

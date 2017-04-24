@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
@@ -42,15 +45,8 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
     private B2WorldCreator creator;
     private static Char player;
-    private int activeTouch = 0;
     private float stateTime;
     private float jumpStartTime; //time a jump started
-    private float stateTimeCompare;
-    private float stateTimeCompare2;
-    private float stateTimeCompare3;
-    boolean justTouched = Gdx.input.justTouched();
-    private int attackCount = 0;
-    private boolean jumpB;
 
     //The current level
     private Level curLevel;
@@ -101,6 +97,13 @@ public class PlayScreen implements Screen {
                 } else { //pressing left half of screen
                     player.charRunLeft();
                 }
+                /*float x = input.inputX(0);
+                float y = input.inputY(0);
+                if(hud.getButton(1).pressed(x, y)) {
+                    player.charRunLeft();
+                } else if (hud.getButton(2).pressed(x, y)) {
+                    player.charRunRight();
+                }*/
             }
             // allow for keyboard controls (left and right arrow keys)
             if(Gdx.input.isKeyPressed(22)){
@@ -147,7 +150,7 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //render
         renderer.render();
-        //b2dr.render(world, gamecam.combined); //box2d debug render - Can uncomment and it shows the box2d debug lines/shapes
+        b2dr.render(world, gamecam.combined); //box2d debug render - Can uncomment and it shows the box2d debug lines/shapes
         game.batch.enableBlending(); //allows multiple tiled tile layers to draw over eachother
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
@@ -156,6 +159,7 @@ public class PlayScreen implements Screen {
         //render current level
         curLevel.render(game);
         game.batch.end();
+
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         //draw hud
         hud.stage.draw();

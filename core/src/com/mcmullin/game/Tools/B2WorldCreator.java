@@ -1,5 +1,4 @@
 package com.mcmullin.game.Tools;
-
 import com.mcmullin.game.Screens.PlayScreen;
 
 /**

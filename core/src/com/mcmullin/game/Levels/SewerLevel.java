@@ -1,5 +1,7 @@
 package com.mcmullin.game.Levels;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -12,21 +14,30 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mcmullin.game.MyGdxGame;
 import com.mcmullin.game.Screens.PlayScreen;
-import com.mcmullin.game.Sprites.Char;
-import com.mcmullin.game.Sprites.levelEnd;
+import com.mcmullin.game.Sprites.*;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
+
+
+import java.util.ArrayList;
 
 /**
  * Created by Jared on 4/8/2017.
  */
 
 public class SewerLevel extends Level{
+    private PlayScreen screen;
+    private Sprite sprite;
     public SewerLevel() {
         this.map = "SewerLevel.tmx";
         this.nextMap = null; //currently last map
         this.levelName = "Dank Sewer";
+        this.roadBlocks = new ArrayList<RoadBlock>();
     }
 
     public void create(PlayScreen screen) {
+        this.screen = screen;
         World world = screen.getWorld();
         TiledMap map = screen.getMap();
         BodyDef bdef = new BodyDef();
@@ -46,17 +57,34 @@ public class SewerLevel extends Level{
                     fdef.shape = shape;
                     body.createFixture(fdef);
                 }
-            } else if (layer.getName().equals("EOL")) { //builds EOL
+            }
+            if (layer.getName().equals("EOL")) { //builds EOL
                 MapObject endObject = layer.getObjects().get("level end"); //this is the object drawn in tiled
                 Rectangle rect = ((RectangleMapObject) endObject).getRectangle();
                 this.end = new levelEnd(screen, rect.getX()/MyGdxGame.PPM, rect.getY()/MyGdxGame.PPM);
+            }
+            if(layer.getName().equals("blocks")) {
+                for (MapObject block: layer.getObjects()) {
+                    if(block.getName().equals("barb")) {
+                        //TextureAtlas atlas = new TextureAtlas("tunnelPics/tunnelAtlas.atlas");
+                        //TextureRegion texture = atlas.findRegion("barbSmol");
+                        roadBlocks.add(new BarbBlock(screen, block));
+                    }
+                }
             }
         }
     }
 
     public void update(Char player, float dt) {
         end.update(player);
+        for (RoadBlock block: roadBlocks) {
+            block.update(dt);
+        }
     }
 
-    public void render(MyGdxGame game){}
+    public void render(MyGdxGame game){
+        for (RoadBlock block: roadBlocks) {
+            block.draw(game.batch);
+        }
+    }
 }
