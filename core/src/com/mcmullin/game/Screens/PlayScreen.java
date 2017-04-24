@@ -63,7 +63,7 @@ public class PlayScreen implements Screen {
         //COMMENTS- Camera set up
         gamecam = new OrthographicCamera();
         gamePort = new ExtendViewport(MyGdxGame.V_WIDTH / MyGdxGame.PPM,MyGdxGame.V_HEIGHT / MyGdxGame.PPM,gamecam);
-        hud = new Hud(game.batch);
+        hud = new Hud(game.batch, curLevel);
         maploader = new TmxMapLoader();
         //COMMENTS- Load tiled map file here
         map = maploader.load(curLevel.getMap());
