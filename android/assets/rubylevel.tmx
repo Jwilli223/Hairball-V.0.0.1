@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="2500" height="20" tilewidth="12" tileheight="12" nextobjectid="166">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="2500" height="20" tilewidth="12" tileheight="12" nextobjectid="168">
  <tileset firstgid="1" name="concrete_tileset" tilewidth="12" tileheight="12" tilecount="30625" columns="175">
   <image source="concrete_tileset.png" width="2100" height="2100"/>
  </tileset>
@@ -97,5 +97,6 @@
  </layer>
  <objectgroup name="EOL">
   <object id="107" name="levelend" x="4352.67" y="13" width="13" height="212"/>
+  <object id="166" name="startoflevel" x="14.6667" y="196" width="40" height="30.6667"/>
  </objectgroup>
 </map>
