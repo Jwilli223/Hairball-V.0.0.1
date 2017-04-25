@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -32,7 +34,6 @@ public class PlayScreen implements Screen {
     //constants to denote hud buttons for use in input handling
     private static final int UP = 0, LEFT = 1, RIGHT = 2;
 
-
     private MyGdxGame game;
     private OrthographicCamera gamecam;
     private Viewport gamePort;
@@ -40,7 +41,7 @@ public class PlayScreen implements Screen {
 
     private TmxMapLoader maploader;
     private TiledMap map;
-    private OrthoCachedTiledMapRenderer renderer;
+    private OrthogonalTiledMapRenderer renderer;
 
     private World world;
     private Box2DDebugRenderer b2dr;
@@ -59,7 +60,7 @@ public class PlayScreen implements Screen {
         this.game = game;
         //COMMENTS- Camera set up
         gamecam = new OrthographicCamera();
-        gamePort = new ExtendViewport(MyGdxGame.V_WIDTH / MyGdxGame.PPM,MyGdxGame.V_HEIGHT / MyGdxGame.PPM,gamecam);
+        gamePort = new ExtendViewport(MyGdxGame.V_WIDTH / MyGdxGame.PPM, MyGdxGame.V_HEIGHT / MyGdxGame.PPM, gamecam);
         hud = new Hud(game.batch, curLevel);
         maploader = new TmxMapLoader();
         //COMMENTS- Load tiled map file here
@@ -67,12 +68,12 @@ public class PlayScreen implements Screen {
         this.curLevel = curLevel;
         levelComplete = false;
 
-        renderer = new OrthoCachedTiledMapRenderer(map, 1/ MyGdxGame.PPM);
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / MyGdxGame.PPM);
         gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
         world = new World(new Vector2(0,-10), true);
         b2dr = new Box2DDebugRenderer();
         creator = new B2WorldCreator(this);
-        player = new Char(this);
+        player = new Char(this, curLevel.getStartX(), curLevel.getStartY());
         world.setContactListener(new WorldContactListener());
         stateTime = 0;
         //set custom touch input as input processor
@@ -109,7 +110,6 @@ public class PlayScreen implements Screen {
     public void update(float dt) {
         stateTime += dt;
         handleInput(dt);
-
         world.step(1/60f, 6, 2);
         //update character
         player.update(dt);
@@ -147,6 +147,7 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         //render character
+
         player.draw(game.batch);
         //render current level
         curLevel.render(game);
@@ -156,9 +157,8 @@ public class PlayScreen implements Screen {
         hud.stage.draw();
 
         //if the level has been completed, move on to the next level
-        if(levelComplete) {
+        if(levelComplete)
             setCurLevel(curLevel.getNextMap());
-        }
 
         //handles joes level, if the player gets past x=3 goto next level
         if(player.getX() >= 3 && curLevel.getMap().equals("tunnel1.tmx")) {
@@ -166,8 +166,7 @@ public class PlayScreen implements Screen {
             dispose();
         }
         //COMMENTS- if the player dies, sets screen to game over, disposes playscreen
-        if(gameOver())
-        {
+        if(gameOver()) {
             game.setScreen(new GameOverScreen(game));
             dispose();
         }

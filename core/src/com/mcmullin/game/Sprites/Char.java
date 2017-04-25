@@ -50,14 +50,20 @@ public class Char extends Sprite {
     private TextureAtlas jumpAtlas;
     private TextureAtlas standingAtlas;
     private TextureAtlas deadAtlas;
+    //start coords
+    private float startX, startY;
 
-    public Char(PlayScreen screen)
+    public Char(PlayScreen screen, float startX, float startY)
     {
         super(new TextureAtlas("idrun.txt").findRegion("1"));
         //this.screen = screen;
         this.world = screen.getWorld();
         currentState = State.STANDING;
         previousState = State.STANDING;
+
+        this.startX  = startX;
+        this.startY = startY;
+
         stateTimer = 0;
         hitCount = 0;
         iAmDead = false; //set to true to test game over screen until we have death working
@@ -99,6 +105,7 @@ public class Char extends Sprite {
         frames3.add(new TextureRegion(runAtlas.findRegion("1"), 0, 0, 49, 44));
         charStand = new Animation(0.1f, frames3);
         defineChar();
+        //defineChar();
         //COMMENTS- Sets size of Char
         setBounds(0,0, 49 / MyGdxGame.PPM, 46 / MyGdxGame.PPM);
     }
@@ -106,8 +113,12 @@ public class Char extends Sprite {
     public void update(float dt)
     {
         anotherTimer += dt;
-        setPosition(b2body.getPosition().x-getWidth() /2, b2body.getPosition().y -getHeight() / 2 );
+        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2 );
         setRegion(getFrame(dt));
+    }
+
+    public void changePosition(float x, float y) {
+        setPosition(x, y);
     }
 
     //COMMENTS- sets appropriate animations for the given states and flipx flips the character images when moving left
@@ -195,12 +206,13 @@ public class Char extends Sprite {
         }
         isTouched = false;
     }
-
+    //float x, float y
     public void defineChar()
     {
         // BOX2D body (circle)- deals with collision. Disable debug render in playscreen if you want to see
         BodyDef bdef = new BodyDef();
-        bdef.position.set(32 / MyGdxGame.PPM,32 / MyGdxGame.PPM);
+        //bdef.position.set(32 / MyGdxGame.PPM, 32 / MyGdxGame.PPM);
+        bdef.position.set(startX, startY);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
         FixtureDef fdef = new FixtureDef();
