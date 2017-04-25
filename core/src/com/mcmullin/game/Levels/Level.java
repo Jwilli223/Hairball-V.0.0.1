@@ -16,6 +16,7 @@ public abstract class Level {
     protected String nextMap;
     //map object that marks the end of the map/level
     protected levelEnd end;
+    protected LevelStart start;
     // levle name for hud
     protected String levelName;
 
@@ -24,6 +25,12 @@ public abstract class Level {
     public String getNextMap() {return nextMap;}
 
     public String getLevelName() {return levelName;}
+
+    public float getEndX() {return end.getX();}
+
+    public float getStartX() {return start.getX();}
+
+    public float getStartY() {return start.getY();}
 
     public void create(PlayScreen screen) {}
 

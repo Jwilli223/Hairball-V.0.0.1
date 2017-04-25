@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -29,6 +31,9 @@ import com.mcmullin.game.Movement.TouchInputProcessor;
  */
 
 public class PlayScreen implements Screen {
+    //constants to denote hud buttons for use in input handling
+    private static final int UP = 0, LEFT = 1, RIGHT = 2;
+
     private MyGdxGame game;
     private OrthographicCamera gamecam;
     private Viewport gamePort;
@@ -36,21 +41,14 @@ public class PlayScreen implements Screen {
 
     private TmxMapLoader maploader;
     private TiledMap map;
-    private OrthoCachedTiledMapRenderer renderer;
+    private OrthogonalTiledMapRenderer renderer;
 
     private World world;
     private Box2DDebugRenderer b2dr;
     private B2WorldCreator creator;
     private static Char player;
-    private int activeTouch = 0;
     private float stateTime;
     private float jumpStartTime; //time a jump started
-    private float stateTimeCompare;
-    private float stateTimeCompare2;
-    private float stateTimeCompare3;
-    boolean justTouched = Gdx.input.justTouched();
-    private int attackCount = 0;
-    private boolean jumpB;
 
     //The current level
     private Level curLevel;
@@ -62,7 +60,7 @@ public class PlayScreen implements Screen {
         this.game = game;
         //COMMENTS- Camera set up
         gamecam = new OrthographicCamera();
-        gamePort = new ExtendViewport(MyGdxGame.V_WIDTH / MyGdxGame.PPM,MyGdxGame.V_HEIGHT / MyGdxGame.PPM,gamecam);
+        gamePort = new ExtendViewport(MyGdxGame.V_WIDTH / MyGdxGame.PPM, MyGdxGame.V_HEIGHT / MyGdxGame.PPM, gamecam);
         hud = new Hud(game.batch, curLevel);
         maploader = new TmxMapLoader();
         //COMMENTS- Load tiled map file here
@@ -70,12 +68,12 @@ public class PlayScreen implements Screen {
         this.curLevel = curLevel;
         levelComplete = false;
 
-        renderer = new OrthoCachedTiledMapRenderer(map, 1/ MyGdxGame.PPM);
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / MyGdxGame.PPM);
         gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
         world = new World(new Vector2(0,-10), true);
         b2dr = new Box2DDebugRenderer();
         creator = new B2WorldCreator(this);
-        player = new Char(this);
+        player = new Char(this, curLevel.getStartX(), curLevel.getStartY());
         world.setContactListener(new WorldContactListener());
         stateTime = 0;
         //set custom touch input as input processor
@@ -88,19 +86,11 @@ public class PlayScreen implements Screen {
 
     public void handleInput(float dt) {
         if(player.currentState != Char.State.DEAD) {
-            //second finger tap or spacebar
-            if((input.isTouched(1) && input.isTouched(0)) || Gdx.input.isKeyJustPressed(62)) { //jump key pressed
-                if (stateTime - jumpStartTime >= dt) { //check time between jumps
-                    jumpStartTime = stateTime; //reset jump start time
-                    player.charJump();//jump
-                }
-            }
             if (input.isTouched(0)) {
-                if (input.inputX(0) > (Gdx.graphics.getWidth() / 2)) { //pressing right half of screen
-                    player.charRunRight();
-                } else { //pressing left half of screen
-                    player.charRunLeft();
-                }
+                inputAct(0, dt);
+            }
+            if(input.isTouched(1)) {
+                inputAct(1, dt);
             }
             // allow for keyboard controls (left and right arrow keys)
             if(Gdx.input.isKeyPressed(22)){
@@ -108,13 +98,18 @@ public class PlayScreen implements Screen {
             } else if (Gdx.input.isKeyPressed(21)){
                 player.charRunLeft();
             }
+            if(Gdx.input.isKeyJustPressed(62)) { //jump key pressed
+                if (stateTime - jumpStartTime >= dt) { //check time between jumps
+                    jumpStartTime = stateTime; //reset jump start time
+                    player.charJump();//jump
+                }
+            }
         }
     }
 
     public void update(float dt) {
         stateTime += dt;
         handleInput(dt);
-
         world.step(1/60f, 6, 2);
         //update character
         player.update(dt);
@@ -152,6 +147,7 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         //render character
+
         player.draw(game.batch);
         //render current level
         curLevel.render(game);
@@ -161,9 +157,8 @@ public class PlayScreen implements Screen {
         hud.stage.draw();
 
         //if the level has been completed, move on to the next level
-        if(levelComplete) {
+        if(levelComplete)
             setCurLevel(curLevel.getNextMap());
-        }
 
         //handles joes level, if the player gets past x=3 goto next level
         if(player.getX() >= 3 && curLevel.getMap().equals("tunnel1.tmx")) {
@@ -171,8 +166,7 @@ public class PlayScreen implements Screen {
             dispose();
         }
         //COMMENTS- if the player dies, sets screen to game over, disposes playscreen
-        if(gameOver())
-        {
+        if(gameOver()) {
             game.setScreen(new GameOverScreen(game));
             dispose();
         }
@@ -209,6 +203,48 @@ public class PlayScreen implements Screen {
         }
     }
 
+    //checks the x and y coordinates of the given input
+    //against the area of the given button, if it is within
+    //the bounds of the button return true
+    //uses class constant buttons UP, LEFT and RIGHT as button
+    public boolean goodPress(float x, float y, int button) {
+        int buttonWH = hud.getButWidthHeight();
+        //get data for button x dimentions
+        float buttonX = hud.getbuttonX(button);
+        float buttonFarX = buttonX + buttonWH;
+        //get data for button y dimentions
+        float buttonY = hud.getbuttonY(button);
+        float buttonFarY = buttonY - buttonWH;
+        //checks if given x & y are in bounds of button
+        boolean goodX = x >= buttonX && x <= buttonFarX;
+        boolean goodY = y <= buttonY && y >= buttonFarY;
+        //if both values are within button return true
+        if(goodX && goodY) {
+            return true;
+        }
+        return false;
+    }
+
+    //calls actions on the character when input is recieved
+    //pointer is the touch input the user would like to check against
+    //this assumes that the pointer has valid data attached to it
+    public void inputAct(int pointer, float dt) {
+        //coordinates of the touch input
+        float inX = input.inputX(pointer);
+        float inY = input.inputY(pointer);
+        //check if input should cause an action and call the action
+        if(goodPress(inX, inY, UP)) {
+            if (stateTime - jumpStartTime >= dt) { //check time between jumps
+                jumpStartTime = stateTime; //reset jump start time
+                player.charJump();//jump
+            }
+        } else if(goodPress(inX, inY, LEFT)) {
+            player.charRunLeft();
+        } else if (goodPress(inX, inY, RIGHT)) {
+            player.charRunRight();
+        }
+    }
+
     @Override
     public void resize(int width, int height)
     {
@@ -224,7 +260,6 @@ gamePort.update(width,height);
     {
         return world;
     }
-
 
     @Override
     public void pause() {}

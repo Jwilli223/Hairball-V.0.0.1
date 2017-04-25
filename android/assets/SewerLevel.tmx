@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="2500" height="20" tilewidth="12" tileheight="12" nextobjectid="117">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="2500" height="20" tilewidth="12" tileheight="12" nextobjectid="122">
  <tileset firstgid="1" name="betterBrickSmol" tilewidth="12" tileheight="12" tilecount="55" columns="11">
   <image source="tunnelPics/betterBrickSmol.jpg" width="140" height="70"/>
  </tileset>
@@ -50,12 +50,11 @@
   <object id="95" name="plat" x="2831.5" y="114.833" width="154.333" height="29.3333"/>
   <object id="96" name="plat" x="3001.33" y="145.5" width="34.8334" height="10"/>
   <object id="97" name="plat" x="3048.08" y="168.5" width="34.8334" height="10"/>
-  <object id="98" name="plat" x="3108.08" y="192.5" width="34.8334" height="10"/>
+  <object id="98" name="plat" x="3107.08" y="191.5" width="34.8334" height="10"/>
   <object id="99" name="plat" x="3193.08" y="169" width="34.8334" height="10"/>
   <object id="100" name="cube" x="3264.08" y="170.833" width="83.3334" height="56.1667"/>
   <object id="101" name="plat" x="3468.58" y="121" width="34.8334" height="10"/>
   <object id="102" name="plat" x="3383.25" y="90.3333" width="34.8334" height="30.6667"/>
-  <object id="103" name="plat" x="3200.58" y="203.667" width="61.5001" height="22"/>
   <object id="104" name="plat" x="1873.25" y="203.667" width="92.8334" height="22"/>
   <object id="105" name="plat" x="1905.25" y="181" width="61.5001" height="22"/>
   <object id="106" name="plat" x="1935.25" y="157.667" width="32.1668" height="22"/>
@@ -66,6 +65,11 @@
   </data>
  </layer>
  <objectgroup name="EOL">
-  <object id="115" name="level end" x="641" y="159" width="60" height="67"/>
+  <object id="115" name="level end" x="4264" y="155" width="60" height="67"/>
+  <object id="121" name="level start" x="4132.5" y="190" width="31" height="30"/>
+ </objectgroup>
+ <objectgroup name="blocks">
+  <object id="117" name="barb" x="426" y="121" width="28" height="34"/>
+  <object id="118" name="barb" x="223" y="122" width="28" height="34"/>
  </objectgroup>
 </map>
