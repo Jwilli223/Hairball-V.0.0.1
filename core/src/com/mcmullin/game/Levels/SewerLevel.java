@@ -13,7 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mcmullin.game.MyGdxGame;
 import com.mcmullin.game.Screens.PlayScreen;
 import com.mcmullin.game.Sprites.Char;
-import com.mcmullin.game.Sprites.levelEnd;
+import com.mcmullin.game.Sprites.*;
 
 /**
  * Created by Jared on 4/8/2017.
@@ -21,8 +21,9 @@ import com.mcmullin.game.Sprites.levelEnd;
 
 public class SewerLevel extends Level{
     public SewerLevel() {
-        this.map = "SewerLevel.tmx";
-        this.nextMap = "rubylevel.tmx"; //currently last map
+       this.map = "SewerLevel2.tmx";
+        this.nextMap = "rubylevel.tmx; //currently last map
+
         this.levelName = "Dank Sewer";
     }
 
@@ -47,16 +48,19 @@ public class SewerLevel extends Level{
                     body.createFixture(fdef);
                 }
             } else if (layer.getName().equals("EOL")) { //builds EOL
-                MapObject endObject = layer.getObjects().get("level end"); //this is the object drawn in tiled
-                Rectangle rect = ((RectangleMapObject) endObject).getRectangle();
-                this.end = new levelEnd(screen, rect.getX()/MyGdxGame.PPM, rect.getY()/MyGdxGame.PPM);
+                for(MapObject object: layer.getObjects()) {
+                    Rectangle rect = ((RectangleMapObject) object).getRectangle();
+                    if(object.getName().equals("level end")) {
+                        this.end = new levelEnd(screen, rect.getX() / MyGdxGame.PPM, rect.getY() / MyGdxGame.PPM);
+                    } else if (object.getName().equals("level start")) {
+                        this.start = new LevelStart(rect.getX() / MyGdxGame.PPM, rect.getY() / MyGdxGame.PPM);
+                    }
+                }
             }
         }
     }
 
-    public void update(Char player, float dt) {
-        end.update(player);
-    }
+    public void update(Char player, float dt) {end.update(player);}
 
     public void render(MyGdxGame game){}
 }
