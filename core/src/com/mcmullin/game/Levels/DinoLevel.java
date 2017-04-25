@@ -16,14 +16,14 @@ import com.mcmullin.game.Sprites.Char;
 import com.mcmullin.game.Sprites.levelEnd;
 
 /**
- * Created by Jared on 4/8/2017.
+ * Created by wenzi on 4/24/2017.
  */
 
-public class SewerLevel extends Level{
-    public SewerLevel() {
-        this.map = "SewerLevel.tmx";
-        this.nextMap = "rubylevel.tmx"; //currently last map
-        this.levelName = "Dank Sewer";
+public class DinoLevel extends Level {
+    public DinoLevel() {
+        this.map = "rubylevel.tmx";
+        this.nextMap = null; //currently last map
+        this.levelName = "Fantastic Fossils";
     }
 
     public void create(PlayScreen screen) {
@@ -36,7 +36,7 @@ public class SewerLevel extends Level{
 
         //COMMENTS- This creates the ground in tiled
         for(MapLayer layer: map.getLayers()) {
-            if(layer.getName().equals("platforms")) { //builds platforms layer
+            if(layer.getName().equals("ground")) { //builds platforms layer
                 for(MapObject object: layer.getObjects().getByType(RectangleMapObject.class)) {
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
                     bdef.type = BodyDef.BodyType.StaticBody;
@@ -47,7 +47,7 @@ public class SewerLevel extends Level{
                     body.createFixture(fdef);
                 }
             } else if (layer.getName().equals("EOL")) { //builds EOL
-                MapObject endObject = layer.getObjects().get("level end"); //this is the object drawn in tiled
+                MapObject endObject = layer.getObjects().get("levelend"); //this is the object drawn in tiled
                 Rectangle rect = ((RectangleMapObject) endObject).getRectangle();
                 this.end = new levelEnd(screen, rect.getX()/MyGdxGame.PPM, rect.getY()/MyGdxGame.PPM);
             }
