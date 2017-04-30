@@ -18,8 +18,7 @@ import com.mcmullin.game.MyGdxGame;
  * Created by Joe on 11/13/2016.
  */
 
-public class StartScreen implements Screen
-{
+public class StartScreen implements Screen {
     private Viewport viewport;
     private Stage stage;
     //private Game game;
@@ -29,7 +28,6 @@ public class StartScreen implements Screen
         this.game = game;
         viewport = new StretchViewport(MyGdxGame.V_WIDTH, MyGdxGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((MyGdxGame) game).batch);
-
 
         Table table = new Table(); //Create a table
         table.center();            //Center the table
@@ -48,10 +46,16 @@ public class StartScreen implements Screen
     @Override
     public void render(float delta) {
         //COMMENTS- If the user clicks/ touches the screen, it loads the main screen and disposes of the start screen.
+<<<<<<< HEAD
         if (Gdx.input.justTouched())
         {
             game.setScreen(new PlayScreen(game, new SewerLevel()));
             //game.setScreen(new PlayScreen(game, new ForestLevel()));
+=======
+        if (Gdx.input.justTouched()) {
+            //game.setScreen(new PlayScreen(game, new SewerLevel()));
+            game.setScreen(new LoadingScreen(game));
+>>>>>>> refs/remotes/origin/master
             dispose();
         }
         Gdx.gl.glClearColor(0,0,0,1);
@@ -72,5 +76,5 @@ public class StartScreen implements Screen
     public void hide() {}
 
     @Override
-    public void dispose() {}
+    public void dispose() {stage.dispose();}
 }

@@ -99,10 +99,6 @@ public class River extends Enemy
         reverseVelocity(true,false);
     }
 
-    //@Override
-    // public void receivedHit() {
-
-    //}
 }
 
 

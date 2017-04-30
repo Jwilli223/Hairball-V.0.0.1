@@ -38,37 +38,34 @@ public class Char extends Sprite {
     private Animation charJump;
     //State information
     private static boolean runningRight;
-    private static boolean iAmDead;
     private static float stateTimer;
-    public static final short DEAD_BIT = 1;
-    private static int hitCount;
-    private static int attackDC = 0;
     private static boolean beenHit;
-    private static boolean isTouched;
+    private static boolean dead;
     //Atlas'
     private TextureAtlas runAtlas;
     private TextureAtlas jumpAtlas;
-    private TextureAtlas standingAtlas;
-    private TextureAtlas deadAtlas;
+    //start coords
+    private float startX, startY;
 
-    public Char(PlayScreen screen)
+    public Char(PlayScreen screen, float startX, float startY)
     {
-        super(new TextureAtlas("idrun.txt").findRegion("1"));
+        super(screen.getGame().manager.get("idrun.atlas", TextureAtlas.class).findRegion("1"));
         //this.screen = screen;
         this.world = screen.getWorld();
         currentState = State.STANDING;
         previousState = State.STANDING;
+
+        this.startX  = startX;
+        this.startY = startY;
+
         stateTimer = 0;
-        hitCount = 0;
-        iAmDead = false; //set to true to test game over screen until we have death working
+        dead = false; //set to true to test game over screen until we have death working
         runningRight = true;
         beenHit = false;
         anotherTimer = 0;
         //setup atlases
-        runAtlas = new TextureAtlas("idrun.txt");
-        jumpAtlas = new TextureAtlas("jumper.txt");
-        standingAtlas = new TextureAtlas("ballstance.txt");
-        deadAtlas = new TextureAtlas("dead.txt");
+        runAtlas = screen.getGame().manager.get("idrun.atlas", TextureAtlas.class);
+        jumpAtlas = screen.getGame().manager.get("jumper.atlas", TextureAtlas.class);
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
         //COMMENTS- Loads individual pictures from sprite sheets (android- assets, txt file related to getAtlas)
@@ -90,15 +87,12 @@ public class Char extends Sprite {
         frames.add(new TextureRegion(jumpAtlas.findRegion("4"), 0, 0, 58, 49));
         frames.add(new TextureRegion(jumpAtlas.findRegion("5"), 0, 0, 50, 44));
         charJump = new Animation(0.1f,frames);
-        Array<TextureRegion> frames2 = new Array<TextureRegion>();
-        frames2.add(new TextureRegion(standingAtlas.findRegion("0"), 0, 0, 21, 50));
-        frames2.add(new TextureRegion(standingAtlas.findRegion("2"), 0, 0, 28, 46));
-        charDead = new TextureRegion(deadAtlas.findRegion("3"), 0, 0, 41, 28);
         Array<TextureRegion> frames3 = new Array<TextureRegion>();
         frames3.add(new TextureRegion(runAtlas.findRegion("2"), 0, 0, 51, 47));
         frames3.add(new TextureRegion(runAtlas.findRegion("1"), 0, 0, 49, 44));
         charStand = new Animation(0.1f, frames3);
         defineChar();
+        //defineChar();
         //COMMENTS- Sets size of Char
         setBounds(0,0, 49 / MyGdxGame.PPM, 46 / MyGdxGame.PPM);
     }
@@ -106,8 +100,12 @@ public class Char extends Sprite {
     public void update(float dt)
     {
         anotherTimer += dt;
-        setPosition(b2body.getPosition().x-getWidth() /2, b2body.getPosition().y -getHeight() / 2 );
+        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2 );
         setRegion(getFrame(dt));
+    }
+
+    public void changePosition(float x, float y) {
+        setPosition(x, y);
     }
 
     //COMMENTS- sets appropriate animations for the given states and flipx flips the character images when moving left
@@ -118,11 +116,9 @@ public class Char extends Sprite {
         switch(currentState)
         {
             case DEAD:
-                region = charDead;
-                break;
             case JUMPING:
-            region = charJump.getKeyFrame(stateTimer);
-            break;
+                region = charJump.getKeyFrame(stateTimer);
+                break;
             case RUNNING:
                 region = charRun.getKeyFrame(stateTimer, true);
                 break;
@@ -140,8 +136,8 @@ public class Char extends Sprite {
         }
 
         if ((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
-                region.flip(true, false);
-                runningRight = true;
+            region.flip(true, false);
+            runningRight = true;
         }
         stateTimer = currentState == previousState ? stateTimer +dt : 0;
         previousState = currentState;
@@ -151,7 +147,7 @@ public class Char extends Sprite {
 
     //COMMENTS- Assigns the current state of the character
     public  State getState(){
-        if(iAmDead)
+        if(dead)
             return State.DEAD;
         else if (b2body.getLinearVelocity().y >0)
             return State.JUMPING;
@@ -165,42 +161,22 @@ public class Char extends Sprite {
     }
 
     public static boolean playerRunD()
-{
-    return runningRight;
-}
-
-    //COMMENTS- Ignore for now
-    public static void setHit(int dead) {
-        if (dead == 1) {
-            anotherTimer = 0;
-            beenHit= true;
-            hitCount++;
-            Gdx.app.log("you have been", "boned");
-        }
-        if (hitCount >=4)
-        {
-            iAmDead = true;
-            stateTimer = 0;
-            hitCount = 0;
-        }
-    }
-
-    public static void setTouch(int touch)
     {
-        if (touch == 1) {
-            Gdx.app.log("you have been", "booo");
-            isTouched = true;
-        } else if (touch == -1) {
-
-        }
-        isTouched = false;
+        return runningRight;
     }
 
+    public static void setHit() {
+        if(!dead) {
+            dead = true;
+        }
+    }
+    //float x, float y
     public void defineChar()
     {
         // BOX2D body (circle)- deals with collision. Disable debug render in playscreen if you want to see
         BodyDef bdef = new BodyDef();
-        bdef.position.set(32 / MyGdxGame.PPM,32 / MyGdxGame.PPM);
+        //bdef.position.set(32 / MyGdxGame.PPM, 32 / MyGdxGame.PPM);
+        bdef.position.set(startX, startY);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
         FixtureDef fdef = new FixtureDef();
