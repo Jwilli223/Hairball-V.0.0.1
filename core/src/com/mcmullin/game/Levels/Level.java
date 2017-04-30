@@ -18,15 +18,10 @@ public abstract class Level {
     protected String nextMap;
     //map object that marks the end of the map/level
     protected levelEnd end;
-<<<<<<< HEAD
-    // level name for hud
-=======
     protected LevelStart start;
-    // levle name for hud
->>>>>>> refs/remotes/origin/master
+    // level name for hud
     protected String levelName;
-    //map of all roadbloacks
-    //protected  List<RoadBlock> roadBlocks;
+    //list of all roadbloacks
     protected  List<RoadBlock> roadBlocks;
 
     public String getMap() {return map;}

@@ -85,25 +85,10 @@ public class PlayScreen implements Screen {
     public void handleInput(float dt) {
         if(player.currentState != Char.State.DEAD) {
             if (input.isTouched(0)) {
-<<<<<<< HEAD
-                if (input.inputX(0) > (Gdx.graphics.getWidth() / 2)) { //pressing right half of screen
-                    player.charRunRight();
-                } else { //pressing left half of screen
-                    player.charRunLeft();
-                }
-                /*float x = input.inputX(0);
-                float y = input.inputY(0);
-                if(hud.getButton(1).pressed(x, y)) {
-                    player.charRunLeft();
-                } else if (hud.getButton(2).pressed(x, y)) {
-                    player.charRunRight();
-                }*/
-=======
                 inputAct(0, dt);
             }
             if(input.isTouched(1)) {
                 inputAct(1, dt);
->>>>>>> refs/remotes/origin/master
             }
             // allow for keyboard controls (left and right arrow keys)
             if(Gdx.input.isKeyPressed(22)){
@@ -155,7 +140,7 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //render
         renderer.render();
-        b2dr.render(world, gamecam.combined); //box2d debug render - Can uncomment and it shows the box2d debug lines/shapes
+        //b2dr.render(world, gamecam.combined); //box2d debug render - Can uncomment and it shows the box2d debug lines/shapes
         game.batch.enableBlending(); //allows multiple tiled tile layers to draw over eachother
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();

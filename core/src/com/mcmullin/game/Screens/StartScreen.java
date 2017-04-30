@@ -46,16 +46,9 @@ public class StartScreen implements Screen {
     @Override
     public void render(float delta) {
         //COMMENTS- If the user clicks/ touches the screen, it loads the main screen and disposes of the start screen.
-<<<<<<< HEAD
-        if (Gdx.input.justTouched())
-        {
-            game.setScreen(new PlayScreen(game, new SewerLevel()));
-            //game.setScreen(new PlayScreen(game, new ForestLevel()));
-=======
         if (Gdx.input.justTouched()) {
             //game.setScreen(new PlayScreen(game, new SewerLevel()));
             game.setScreen(new LoadingScreen(game));
->>>>>>> refs/remotes/origin/master
             dispose();
         }
         Gdx.gl.glClearColor(0,0,0,1);
