@@ -24,9 +24,10 @@ public class Log extends Enemy {
     public Log(PlayScreen screen, float x, float y)
     {
         super(screen, x, y);
-        atlas = new TextureAtlas("platform.atlas");
+        //atlas = new TextureAtlas("platform.atlas");
+        atlas = new TextureAtlas("tunnelPics/tunnelAtlas.atlas");
         frames = new Array<TextureRegion>();
-        frames.add(new TextureRegion(atlas.findRegion("Log"), 0, 0, 122, 48));
+        frames.add(new TextureRegion(atlas.findRegion("barbSmol"), 0, 0, 120, 75));
         walkAnimation = new Animation(.1f, frames);
         stateTime = 0;
         setBounds(getX(),getY(),122 / MyGdxGame.PPM , 48 / MyGdxGame.PPM );

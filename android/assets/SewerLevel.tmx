@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="2500" height="20" tilewidth="12" tileheight="12" nextobjectid="119">
+=======
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="2500" height="20" tilewidth="12" tileheight="12" nextobjectid="122">
+>>>>>>> refs/remotes/origin/master
  <tileset firstgid="1" name="betterBrickSmol" tilewidth="12" tileheight="12" tilecount="55" columns="11">
   <image source="tunnelPics/betterBrickSmol.jpg" width="140" height="70"/>
  </tileset>
@@ -66,7 +70,10 @@
  </layer>
  <objectgroup name="EOL">
   <object id="115" name="level end" x="4264" y="155" width="60" height="67"/>
+<<<<<<< HEAD
+=======
   <object id="121" name="level start" x="4132.5" y="190" width="31" height="30"/>
+>>>>>>> refs/remotes/origin/master
  </objectgroup>
  <objectgroup name="blocks">
   <object id="117" name="barb" x="426" y="121" width="28" height="34"/>

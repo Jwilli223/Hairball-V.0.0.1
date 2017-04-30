@@ -4,7 +4,9 @@ package com.mcmullin.game.Sprites;
  * Created by Jared on 4/3/2017.
  */
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
@@ -24,7 +26,6 @@ public abstract class RoadBlock extends Sprite{
         this.world = screen.getWorld();
         //gather object position information from map object
         this.rect = ((RectangleMapObject) object).getRectangle();
-        this.rect = ((RectangleMapObject) object).getRectangle();
         float width = rect.getWidth() / 2 / MyGdxGame.PPM;
         float height = rect.getHeight() / 2 / MyGdxGame.PPM;
         //apply position info to sprite object
@@ -33,6 +34,11 @@ public abstract class RoadBlock extends Sprite{
         //define object in game world
         defineRB();
     }
+
+    public void update(float dt) {}
+
+    @Override
+    public void draw(Batch batch) {}
 
     //may be different for each roadblock as it will be the
     //body type (may want a circle or rectangle depending

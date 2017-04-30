@@ -147,6 +147,7 @@ public class PlayScreen implements Screen {
         //render current level
         curLevel.render(game);
         game.batch.end();
+
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         //draw hud
         hud.stage.draw();

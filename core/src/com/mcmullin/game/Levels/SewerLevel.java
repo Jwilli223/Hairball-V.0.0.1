@@ -13,11 +13,11 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mcmullin.game.MyGdxGame;
 import com.mcmullin.game.Screens.PlayScreen;
-import com.mcmullin.game.Sprites.Char;
 import com.mcmullin.game.Sprites.*;
-
 import java.util.ArrayList;
+import com.mcmullin.game.Sprites.Char;
 import java.util.List;
+
 
 /**
  * Created by Jared on 4/8/2017.

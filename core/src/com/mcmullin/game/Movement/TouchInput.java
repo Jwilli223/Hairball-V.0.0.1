@@ -1,5 +1,7 @@
 package com.mcmullin.game.Movement;
 
+import com.mcmullin.game.MyGdxGame;
+
 /**
  * Created by Produit on 3/28/2017.
  */
