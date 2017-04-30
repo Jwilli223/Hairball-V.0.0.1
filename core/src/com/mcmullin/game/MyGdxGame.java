@@ -2,6 +2,7 @@ package com.mcmullin.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mcmullin.game.Screens.StartScreen;
@@ -19,6 +20,8 @@ public class MyGdxGame extends Game {
 	public static final short ENEMY_BIT = 64;
 	public static final short OBJECT_BIT = 32;
 	public static final short LOG_BIT = 256;
+	//asset manager
+	public AssetManager manager = new AssetManager();
 
 	@Override
 	public void create () {

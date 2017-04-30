@@ -6,22 +6,16 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mcmullin.game.Levels.*;
 import com.mcmullin.game.MyGdxGame;
 import com.mcmullin.game.Scenes.Hud;
 import com.mcmullin.game.Sprites.Char;
-import com.mcmullin.game.Sprites.Enemy;
-import com.mcmullin.game.Sprites.Skeleton;
 import com.mcmullin.game.Tools.B2WorldCreator;
 import com.mcmullin.game.Tools.WorldContactListener;
 import com.mcmullin.game.Movement.TouchInputProcessor;
@@ -62,9 +56,10 @@ public class PlayScreen implements Screen {
         gamecam = new OrthographicCamera();
         gamePort = new ExtendViewport(MyGdxGame.V_WIDTH / MyGdxGame.PPM, MyGdxGame.V_HEIGHT / MyGdxGame.PPM, gamecam);
         hud = new Hud(game.batch, curLevel);
-        maploader = new TmxMapLoader();
+        //maploader = new TmxMapLoader();
         //COMMENTS- Load tiled map file here
-        map = maploader.load(curLevel.getMap());
+        //map = maploader.load(curLevel.getMap());
+        map = game.manager.get(curLevel.getMap(), TiledMap.class);
         this.curLevel = curLevel;
         levelComplete = false;
 
@@ -186,6 +181,8 @@ public class PlayScreen implements Screen {
         return curLevel;
     }
 
+    public MyGdxGame getGame() {return game;}
+
     //Sets the screen to the level passed to it
     //this is called when the "EOL" marker is hit in
     //any level. If the given level is null the end screen
@@ -194,10 +191,7 @@ public class PlayScreen implements Screen {
         if(level == null) {
             game.setScreen(new GameOverScreen(game));
             dispose();
-        } else if(level.equals("tunnel1.tmx")) {
-            game.setScreen(new PlayScreen(game, new ForestLevel()));
-            dispose();
-        } else if(level.equals("SewerLevel.tmx")) {
+        } if(level.equals("SewerLevel2.tmx")) {
             game.setScreen(new PlayScreen(game, new SewerLevel()));
             dispose();
         }else if(level.equals("rubylevel.tmx")) {
