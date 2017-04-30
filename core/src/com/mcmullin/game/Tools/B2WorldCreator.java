@@ -6,8 +6,7 @@ import com.mcmullin.game.Screens.PlayScreen;
  */
 
 public class B2WorldCreator {
-    public B2WorldCreator(PlayScreen screen)
-    {
+    public B2WorldCreator(PlayScreen screen) {
         screen.getCurLevel().create(screen);
     }
 }

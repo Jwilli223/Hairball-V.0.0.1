@@ -31,7 +31,7 @@ public abstract class RoadBlock extends Sprite{
         //apply position info to sprite object
         setPosition(rect.getX() / MyGdxGame.PPM, rect.getY() / MyGdxGame.PPM);
         setBounds(getX(), getY(), width, height);
-        //define obect in game world
+        //define object in game world
         defineRB();
     }
 
