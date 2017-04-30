@@ -200,6 +200,9 @@ public class PlayScreen implements Screen {
         } else if(level.equals("SewerLevel.tmx")) {
             game.setScreen(new PlayScreen(game, new SewerLevel()));
             dispose();
+        }else if(level.equals("rubylevel.tmx")) {
+            game.setScreen(new PlayScreen(game, new DinoLevel()));
+            dispose();
         }
     }
 
