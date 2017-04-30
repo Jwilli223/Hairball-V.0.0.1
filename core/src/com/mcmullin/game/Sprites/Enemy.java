@@ -17,7 +17,6 @@ import com.mcmullin.game.Screens.PlayScreen;
 
 public abstract class Enemy extends Sprite
 {
-
     protected World world;
     protected PlayScreen screen;
     protected TextureAtlas atlas;

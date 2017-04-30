@@ -33,51 +33,9 @@ public class WorldContactListener implements ContactListener {
 
         switch (cDef)
         {
-            case MyGdxGame.ENEMY_HEAD_BIT | MyGdxGame.CHAR_BIT:
-                if (fixA.getFilterData().categoryBits == MyGdxGame.ENEMY_HEAD_BIT)
-
-                    ((Enemy)fixA.getUserData()).hitOnHead();
-                else if (fixB.getFilterData().categoryBits == MyGdxGame.ENEMY_HEAD_BIT)
-                    ((Enemy)fixB.getUserData()).hitOnHead();
-
-                break;
-            case MyGdxGame.LOG_BIT| MyGdxGame.OBJECT_BIT:
-                if (fixA.getFilterData().categoryBits == MyGdxGame.ENEMY_BIT)
-                    ((Enemy)fixA.getUserData()).reverseVelocity(true, false);
-                    //Char.setTouch(true);
-                    //Gdx.app.log("you have been", "boned");
-                else
-                    ((Enemy)fixB.getUserData()).reverseVelocity(true, false);
-                // Gdx.app.log("you have been", "boned22");
-                //Char.setTouch(true);
-                break;
-            case MyGdxGame.ENEMY_BIT | MyGdxGame.ENEMY_BIT:
-                ((Enemy)fixA.getUserData()).hitByEnemy((Enemy)fixB.getUserData());
-                ((Enemy)fixB.getUserData()).hitByEnemy((Enemy)fixA.getUserData());
-                break;
             case MyGdxGame.CHAR_BIT | MyGdxGame.ENEMY_BIT:
-                Char.setHit(1);
+                Char.setHit();
                 break;
-            case MyGdxGame.CHAR_BIT| MyGdxGame.LOG_BIT:
-                if (fixA.getFilterData().categoryBits == MyGdxGame.LOG_BIT)
-                    //((Enemy)fixA.getUserData()).reverseVelocity(true, false);
-                    //Char.setTouch(true);
-                    Gdx.app.log("you have been", "bon");
-                    //Gdx.app.log("you have been", "bonooot");
-                else
-                    //((Enemy)fixB.getUserData()).reverseVelocity(true, false);
-                    //Gdx.app.log("you have been", "boned22");
-                    Gdx.app.log("you have been", "bont");
-                Char.setTouch(1);
-                break;
-           /* case MyGdxGame.ENEMY_HEAD_BIT | MyGdxGame.FIREBALL_BIT:
-                if (fixA.getFilterData().categoryBits == MyGdxGame.ENEMY_HEAD_BIT)
-
-                    ((Enemy)fixA.getUserData()).hitOnHead();
-                else if (fixB.getFilterData().categoryBits == MyGdxGame.ENEMY_HEAD_BIT)
-                    ((Enemy)fixB.getUserData()).hitOnHead();
-
-                break;*/
         }
 
     }

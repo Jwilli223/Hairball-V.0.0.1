@@ -1,5 +1,6 @@
 package com.mcmullin.game.Levels;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -12,18 +13,24 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mcmullin.game.MyGdxGame;
 import com.mcmullin.game.Screens.PlayScreen;
-import com.mcmullin.game.Sprites.Char;
 import com.mcmullin.game.Sprites.*;
+import java.util.ArrayList;
+import com.mcmullin.game.Sprites.Char;
+import java.util.List;
+
 
 /**
  * Created by Jared on 4/8/2017.
  */
 
 public class SewerLevel extends Level{
+  private List<Sprite> RBs;
+
     public SewerLevel() {
         this.map = "SewerLevel2.tmx";
         this.nextMap = "rubylevel.tmx"; //currently last map
         this.levelName = "Dank Sewer";
+        RBs = new ArrayList<Sprite>();
     }
 
     public void create(PlayScreen screen) {
@@ -34,8 +41,8 @@ public class SewerLevel extends Level{
         FixtureDef fdef = new FixtureDef();
         Body body;
 
-        //COMMENTS- This creates the ground in tiled
         for(MapLayer layer: map.getLayers()) {
+            //COMMENTS- This creates the ground in tiled
             if(layer.getName().equals("platforms")) { //builds platforms layer
                 for(MapObject object: layer.getObjects().getByType(RectangleMapObject.class)) {
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -53,6 +60,12 @@ public class SewerLevel extends Level{
                         this.end = new levelEnd(screen, rect.getX() / MyGdxGame.PPM, rect.getY() / MyGdxGame.PPM);
                     } else if (object.getName().equals("level start")) {
                         this.start = new LevelStart(rect.getX() / MyGdxGame.PPM, rect.getY() / MyGdxGame.PPM);
+                    }
+                }
+            } else if (layer.getName().equals("RB")) {
+                for(MapObject object: layer.getObjects()) {
+                    if(object.getName().equals("barb")) {
+                        RBs.add(new Barb(screen, object));
                     }
                 }
             }
