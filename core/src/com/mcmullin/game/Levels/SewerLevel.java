@@ -24,7 +24,7 @@ import java.util.List;
  */
 
 public class SewerLevel extends Level{
-    private List<Sprite> RBs;
+  private List<Sprite> RBs;
 
     public SewerLevel() {
         this.map = "SewerLevel2.tmx";
