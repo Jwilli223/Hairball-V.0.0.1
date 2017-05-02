@@ -4,6 +4,8 @@ import com.mcmullin.game.MyGdxGame;
 import com.mcmullin.game.Screens.PlayScreen;
 import com.mcmullin.game.Sprites.*;
 
+import java.util.List;
+
 
 /**
  * Created by Produit on 4/8/2017.
@@ -17,8 +19,10 @@ public abstract class Level {
     //map object that marks the end of the map/level
     protected levelEnd end;
     protected LevelStart start;
-    // levle name for hud
+    // level name for hud
     protected String levelName;
+    //list of all roadbloacks
+    protected  List<RoadBlock> roadBlocks;
 
     public String getMap() {return map;}
 

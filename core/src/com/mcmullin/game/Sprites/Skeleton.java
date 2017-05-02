@@ -37,8 +37,7 @@ public class Skeleton extends Enemy
         setBounds(getX(),getY(),34 / MyGdxGame.PPM , 16 / MyGdxGame.PPM );
     }
 
-    public void update(float dt)
-    {
+    public void update(float dt) {
         stateTime += dt;
         //  b2body.setLinearVelocity(velocity);
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
