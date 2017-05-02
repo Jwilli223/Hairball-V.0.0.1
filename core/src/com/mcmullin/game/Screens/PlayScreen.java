@@ -199,6 +199,13 @@ public class PlayScreen implements Screen {
             game.setScreen(new PlayScreen(game, new DinoLevel()));
             dispose();
         }
+        else if(level.equals("spacelevel.tmx")) {
+            game.setScreen(new PlayScreen(game, new SpaceLevel()));
+            dispose();
+        }else if(level.equals("corelevel.tmx")) {
+            game.setScreen(new PlayScreen(game, new CoreLevel()));
+            dispose();
+        }
     }
 
     //checks the x and y coordinates of the given input
@@ -246,7 +253,7 @@ public class PlayScreen implements Screen {
     @Override
     public void resize(int width, int height)
     {
-gamePort.update(width,height);
+        gamePort.update(width,height);
     }
 
     public TiledMap getMap()

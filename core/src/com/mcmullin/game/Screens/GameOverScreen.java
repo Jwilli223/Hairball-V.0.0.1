@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mcmullin.game.Levels.SewerLevel;
+import com.mcmullin.game.Levels.*;
 import com.mcmullin.game.MyGdxGame;
 
 
@@ -43,14 +43,14 @@ public class GameOverScreen extends ApplicationAdapter implements Screen {
 
     }
 
-   @Override
+    @Override
     public void render(float delta)
     {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-       if (Gdx.input.justTouched())
+        if (Gdx.input.justTouched())
         {
-            game.setScreen(new PlayScreen((MyGdxGame) game, new SewerLevel()));
+            game.setScreen(new PlayScreen((MyGdxGame) game, new SpaceLevel()));
             dispose();
         }
         stage.draw();
@@ -79,6 +79,6 @@ public class GameOverScreen extends ApplicationAdapter implements Screen {
     @Override
     public void dispose()
     {
-stage.dispose();
+        stage.dispose();
     }
 }
