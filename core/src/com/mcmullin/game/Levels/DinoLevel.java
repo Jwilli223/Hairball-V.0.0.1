@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mcmullin.game.MyGdxGame;
 import com.mcmullin.game.Screens.PlayScreen;
 import com.mcmullin.game.Sprites.Char;
+import com.mcmullin.game.Sprites.LevelStart;
 import com.mcmullin.game.Sprites.levelEnd;
 
 /**
@@ -47,9 +48,14 @@ public class DinoLevel extends Level {
                     body.createFixture(fdef);
                 }
             } else if (layer.getName().equals("EOL")) { //builds EOL
-                MapObject endObject = layer.getObjects().get("levelend"); //this is the object drawn in tiled
-                Rectangle rect = ((RectangleMapObject) endObject).getRectangle();
-                this.end = new levelEnd(screen, rect.getX()/MyGdxGame.PPM, rect.getY()/MyGdxGame.PPM);
+                for(MapObject object: layer.getObjects()) {
+                    Rectangle rect = ((RectangleMapObject) object).getRectangle();
+                    if(object.getName().equals("levelend")) {
+                        this.end = new levelEnd(screen, rect.getX() / MyGdxGame.PPM, rect.getY() / MyGdxGame.PPM);
+                    } else if (object.getName().equals("startoflevel")) {
+                        this.start = new LevelStart(rect.getX() / MyGdxGame.PPM, rect.getY() / MyGdxGame.PPM);
+                    }
+                }
             }
         }
     }
