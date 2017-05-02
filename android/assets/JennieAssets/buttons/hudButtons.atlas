@@ -1,0 +1,26 @@
+
+hudButtons.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+LeftButton
+  rotate: false
+  xy: 1, 112
+  size: 144, 109
+  orig: 144, 109
+  offset: 0, 0
+  index: -1
+RightButton
+  rotate: false
+  xy: 1, 1
+  size: 144, 109
+  orig: 144, 109
+  offset: 0, 0
+  index: -1
+UpButton
+  rotate: false
+  xy: 147, 77
+  size: 109, 144
+  orig: 109, 144
+  offset: 0, 0
+  index: -1

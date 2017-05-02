@@ -13,17 +13,19 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mcmullin.game.MyGdxGame;
 import com.mcmullin.game.Screens.PlayScreen;
 import com.mcmullin.game.Sprites.Char;
+import com.mcmullin.game.Sprites.LevelStart;
 import com.mcmullin.game.Sprites.levelEnd;
 
 /**
- * Created by wenzi on 4/24/2017.
+ * Created by jenni on 5/1/2017.
  */
 
-public class DinoLevel extends Level {
-    public DinoLevel() {
-        this.map = "rubylevel.tmx";
-        this.nextMap = "corelevel.tmx";
-        this.levelName = "Fantastic Fossils";
+public class CoreLevel extends Level {
+
+    public CoreLevel() {
+        this.map = "corelevel.tmx";
+        this.nextMap = null; //currently last map
+        this.levelName = "The Core";
     }
 
     public void create(PlayScreen screen) {
@@ -35,9 +37,9 @@ public class DinoLevel extends Level {
         Body body;
 
         //COMMENTS- This creates the ground in tiled
-        for(MapLayer layer: map.getLayers()) {
-            if(layer.getName().equals("ground")) { //builds platforms layer
-                for(MapObject object: layer.getObjects().getByType(RectangleMapObject.class)) {
+        for (MapLayer layer : map.getLayers()) {
+            if (layer.getName().equals("platforms")) { //builds platforms layer
+                for (MapObject object : layer.getObjects().getByType(RectangleMapObject.class)) {
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
                     bdef.type = BodyDef.BodyType.StaticBody;
                     bdef.position.set((rect.getX() + rect.getWidth() / 2) / MyGdxGame.PPM, (rect.getY() + rect.getHeight() / 2) / MyGdxGame.PPM);
@@ -47,16 +49,20 @@ public class DinoLevel extends Level {
                     body.createFixture(fdef);
                 }
             } else if (layer.getName().equals("EOL")) { //builds EOL
-                MapObject endObject = layer.getObjects().get("levelend"); //this is the object drawn in tiled
-                Rectangle rect = ((RectangleMapObject) endObject).getRectangle();
-                this.end = new levelEnd(screen, rect.getX()/MyGdxGame.PPM, rect.getY()/MyGdxGame.PPM);
+                for (MapObject object : layer.getObjects()) {
+                    Rectangle rect = ((RectangleMapObject) object).getRectangle();
+                    if (object.getName().equals("level end")) {
+                        this.end = new levelEnd(screen, rect.getX() / MyGdxGame.PPM, rect.getY() / MyGdxGame.PPM);
+                    } else if (object.getName().equals("level start")) {
+                        this.start = new LevelStart(rect.getX() / MyGdxGame.PPM, rect.getY() / MyGdxGame.PPM);
+                    }
+                }
             }
         }
     }
 
-    public void update(Char player, float dt) {
-        end.update(player);
-    }
+
+    public void update(Char player, float dt) {end.update(player);}
 
     public void render(MyGdxGame game){}
 }

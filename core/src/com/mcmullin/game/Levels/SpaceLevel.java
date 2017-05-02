@@ -13,23 +13,25 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mcmullin.game.MyGdxGame;
 import com.mcmullin.game.Screens.PlayScreen;
-import com.mcmullin.game.Sprites.*;
-import java.util.ArrayList;
 import com.mcmullin.game.Sprites.Char;
+import com.mcmullin.game.Sprites.Crater;
+import com.mcmullin.game.Sprites.LevelStart;
+import com.mcmullin.game.Sprites.levelEnd;
+import com.mcmullin.game.Sprites.BlackHole;
+
+import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * Created by Jared on 4/8/2017.
+ * Created by jenni on 4/30/2017.
  */
 
-public class SewerLevel extends Level{
+public class SpaceLevel extends Level {
     private List<Sprite> RBs;
-
-    public SewerLevel() {
-        this.map = "SewerLevel2.tmx";
-        this.nextMap = "rubylevel.tmx"; //currently last map
-        this.levelName = "Dank Sewer";
+    public SpaceLevel() {
+        this.map = "spacelevel.tmx";
+        this.nextMap = "SewerLevel2.tmx";
+        this.levelName = "The Final Frontier";
         RBs = new ArrayList<Sprite>();
     }
 
@@ -41,10 +43,10 @@ public class SewerLevel extends Level{
         FixtureDef fdef = new FixtureDef();
         Body body;
 
-        for(MapLayer layer: map.getLayers()) {
-            //COMMENTS- This creates the ground in tiled
-            if(layer.getName().equals("platforms")) { //builds platforms layer
-                for(MapObject object: layer.getObjects().getByType(RectangleMapObject.class)) {
+        //COMMENTS- This creates the ground in tiled
+        for (MapLayer layer : map.getLayers()) {
+            if (layer.getName().equals("platforms")) { //builds platforms layer
+                for (MapObject object : layer.getObjects().getByType(RectangleMapObject.class)) {
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
                     bdef.type = BodyDef.BodyType.StaticBody;
                     bdef.position.set((rect.getX() + rect.getWidth() / 2) / MyGdxGame.PPM, (rect.getY() + rect.getHeight() / 2) / MyGdxGame.PPM);
@@ -54,23 +56,28 @@ public class SewerLevel extends Level{
                     body.createFixture(fdef);
                 }
             } else if (layer.getName().equals("EOL")) { //builds EOL
-                for(MapObject object: layer.getObjects()) {
+                for (MapObject object : layer.getObjects()) {
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
-                    if(object.getName().equals("level end")) {
+                    if (object.getName().equals("level end")) {
                         this.end = new levelEnd(screen, rect.getX() / MyGdxGame.PPM, rect.getY() / MyGdxGame.PPM);
                     } else if (object.getName().equals("level start")) {
                         this.start = new LevelStart(rect.getX() / MyGdxGame.PPM, rect.getY() / MyGdxGame.PPM);
                     }
                 }
-            } else if (layer.getName().equals("RB")) {
+            }
+            else if (layer.getName().equals("RB")) {
                 for(MapObject object: layer.getObjects()) {
-                    if(object.getName().equals("barb")) {
-                        RBs.add(new Barb(screen, object));
+                    if(object.getName().equals("bh")) {
+                        RBs.add(new BlackHole(screen, object));
+                    }
+                    else if(object.getName().equals("crater")) {
+                        RBs.add(new Crater(screen, object));
                     }
                 }
             }
         }
     }
+
 
     public void update(Char player, float dt) {end.update(player);}
 
