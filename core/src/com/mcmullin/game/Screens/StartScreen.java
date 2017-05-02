@@ -24,8 +24,10 @@ public class StartScreen implements Screen {
     //private Game game;
     private MyGdxGame game;
 
+
     public StartScreen(MyGdxGame game) {
         this.game = game;
+
         viewport = new StretchViewport(MyGdxGame.V_WIDTH, MyGdxGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((MyGdxGame) game).batch);
 

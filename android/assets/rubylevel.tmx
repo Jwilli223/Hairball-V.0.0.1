@@ -32,7 +32,7 @@
  <objectgroup name="ground">
   <object id="27" name="Floor" x="0.33333" y="227.833" width="9916" height="12"/>
   <object id="53" name="frontWall" x="1.33333" y="1.33333" width="6" height="226"/>
-  <object id="56" name="backWall" x="4350.67" y="1.99983" width="6" height="218.667"/>
+  <object id="56" name="backWall" x="4351.67" y="7.99983" width="6" height="218.667"/>
   <object id="57" name="top" x="6" y="1" width="4344.67" height="0.333333"/>
   <object id="112" x="2378.67" y="93.3333" width="82.6667" height="18"/>
   <object id="113" x="2262.67" y="100" width="84" height="18"/>
@@ -96,7 +96,7 @@
   </data>
  </layer>
  <objectgroup name="EOL">
-  <object id="107" name="levelend" x="4352.67" y="13" width="13" height="212"/>
+  <object id="107" name="levelend" x="4238.67" y="14" width="73" height="212"/>
   <object id="166" name="startoflevel" x="14.6667" y="196" width="40" height="30.6667"/>
  </objectgroup>
 </map>

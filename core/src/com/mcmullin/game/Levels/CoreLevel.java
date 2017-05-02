@@ -24,7 +24,7 @@ public class CoreLevel extends Level {
 
     public CoreLevel() {
         this.map = "corelevel.tmx";
-        this.nextMap = null; //currently last map
+        this.nextMap = "end"; //currently last map
         this.levelName = "The Core";
     }
 

@@ -55,9 +55,9 @@ public class LoadingScreen implements Screen {
         manager.load("jumper.atlas", TextureAtlas.class);
         //load maps
         manager.setLoader(TiledMap.class, new TmxMapLoader());
+        manager.load("spacelevel.tmx", TiledMap.class);
         manager.load("SewerLevel2.tmx", TiledMap.class);
         manager.load("rubylevel.tmx", TiledMap.class);
-        manager.load("spacelevel.tmx", TiledMap.class);
         manager.load("corelevel.tmx", TiledMap.class);
 
     }
@@ -73,7 +73,8 @@ public class LoadingScreen implements Screen {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(manager.update()) {
-            game.setScreen(new PlayScreen(game, new SpaceLevel()));
+            //game.setScreen(new PlayScreen(game, new SpaceLevel()));
+            game.setScreen(new PlayScreen(game, new DinoLevel()));
             dispose();
         } else {
             float prog = (manager.getProgress() * 100);
