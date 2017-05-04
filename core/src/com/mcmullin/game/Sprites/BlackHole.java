@@ -8,11 +8,12 @@ import com.mcmullin.game.MyGdxGame;
 import com.mcmullin.game.Screens.PlayScreen;
 
 /**
- * Created by Produit on 4/30/2017.
+ * Created by jenni on 5/2/2017.
  */
 
-public class Barb extends RoadBlock {
-    public Barb(PlayScreen screen, MapObject object) {
+public class BlackHole extends RoadBlock {
+
+    public BlackHole(PlayScreen screen, MapObject object) {
         super(screen, object);
     }
 
@@ -32,6 +33,4 @@ public class Barb extends RoadBlock {
         fixture.shape = fixShape;
         body.createFixture(fixture);
     }
-
-
 }

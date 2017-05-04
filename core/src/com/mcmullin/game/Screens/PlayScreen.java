@@ -55,6 +55,7 @@ public class PlayScreen implements Screen {
         //COMMENTS- Camera set up
         gamecam = new OrthographicCamera();
         gamePort = new ExtendViewport(MyGdxGame.V_WIDTH / MyGdxGame.PPM, MyGdxGame.V_HEIGHT / MyGdxGame.PPM, gamecam);
+        //gamePort = new ExtendViewport(MyGdxGame.V_WIDTH / MyGdxGame.PPM, 0, gamecam);
         hud = new Hud(game.batch, curLevel);
         //maploader = new TmxMapLoader();
         //COMMENTS- Load tiled map file here
@@ -64,7 +65,10 @@ public class PlayScreen implements Screen {
         levelComplete = false;
 
         renderer = new OrthogonalTiledMapRenderer(map, 1 / MyGdxGame.PPM);
+        //gamecam.position.set(gamePort.getWorldWidth() / 2, 1.25f, 0);
         gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
+        //gamecam.position.y = player.b2body.getPosition().y +.75f;
+        gamecam.update();
         world = new World(new Vector2(0,-10), true);
         b2dr = new Box2DDebugRenderer();
         creator = new B2WorldCreator(this);
@@ -74,6 +78,9 @@ public class PlayScreen implements Screen {
         //set custom touch input as input processor
         input = new TouchInputProcessor();
         Gdx.input.setInputProcessor(input);
+
+        //gamecam.position.y = player.b2body.getPosition().y +.75f;
+        //gamecam.update();
     }
 
     @Override
@@ -116,7 +123,7 @@ public class PlayScreen implements Screen {
         getPlayerX(dt);
 
         gamecam.position.x = player.b2body.getPosition().x;
-        gamecam.position.y = player.b2body.getPosition().y+.75f;
+        gamecam.position.y = player.b2body.getPosition().y +.75f;
 
         gamecam.update();
         renderer.setView(gamecam);
@@ -156,11 +163,6 @@ public class PlayScreen implements Screen {
         if(levelComplete)
             setCurLevel(curLevel.getNextMap());
 
-        //handles joes level, if the player gets past x=3 goto next level
-        if(player.getX() >= 3 && curLevel.getMap().equals("tunnel1.tmx")) {
-            game.setScreen(new PlayScreen(game, new SewerLevel()));
-            dispose();
-        }
         //COMMENTS- if the player dies, sets screen to game over, disposes playscreen
         if(gameOver()) {
             game.setScreen(new GameOverScreen(game));
@@ -189,14 +191,20 @@ public class PlayScreen implements Screen {
     //any level. If the given level is null the end screen
     //is shown.
     public void setCurLevel(String level) {
-        if(level == null) {
+        if(level.equals("end")) {
             game.setScreen(new GameOverScreen(game));
             dispose();
-        } if(level.equals("SewerLevel2.tmx")) {
+        } else if(level.equals("SewerLevel2.tmx")) {
             game.setScreen(new PlayScreen(game, new SewerLevel()));
             dispose();
         }else if(level.equals("rubylevel.tmx")) {
             game.setScreen(new PlayScreen(game, new DinoLevel()));
+            dispose();
+        } else if(level.equals("spacelevel.tmx")) {
+            game.setScreen(new PlayScreen(game, new SpaceLevel()));
+            dispose();
+        } else if(level.equals("corelevel.tmx")) {
+            game.setScreen(new PlayScreen(game, new CoreLevel()));
             dispose();
         }
     }
@@ -246,7 +254,7 @@ public class PlayScreen implements Screen {
     @Override
     public void resize(int width, int height)
     {
-gamePort.update(width,height);
+        gamePort.update(width,height);
     }
 
     public TiledMap getMap()

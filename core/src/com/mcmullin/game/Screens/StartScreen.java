@@ -24,8 +24,10 @@ public class StartScreen implements Screen {
     //private Game game;
     private MyGdxGame game;
 
+
     public StartScreen(MyGdxGame game) {
         this.game = game;
+
         viewport = new StretchViewport(MyGdxGame.V_WIDTH, MyGdxGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((MyGdxGame) game).batch);
 
@@ -33,10 +35,10 @@ public class StartScreen implements Screen {
         table.center();            //Center the table
         table.setFillParent(true); //Make the table the size of the whole screen
         Image startImg = new Image(new Texture("JennieAssets/GameStartHairball.png"));
-                                   //Set the image as the start screen design
+        //Set the image as the start screen design
         startImg.setSize(400,300); //Set the image size
         table.add(startImg).size(startImg.getWidth(),startImg.getHeight());
-                                   //Add the image to the table and set the size to that of the image
+        //Add the image to the table and set the size to that of the image
         stage.addActor(table);     //Add the table to the stage
 
     }
