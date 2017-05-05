@@ -73,8 +73,8 @@ public class LoadingScreen implements Screen {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(manager.update()) {
-            //game.setScreen(new PlayScreen(game, new SpaceLevel()));
-            game.setScreen(new PlayScreen(game, new DinoLevel()));
+            game.setScreen(new PlayScreen(game, new SpaceLevel()));
+            //game.setScreen(new PlayScreen(game, new DinoLevel()));
             dispose();
         } else {
             float prog = (manager.getProgress() * 100);
