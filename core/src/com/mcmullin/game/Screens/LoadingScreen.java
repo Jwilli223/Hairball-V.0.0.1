@@ -19,7 +19,7 @@ import com.mcmullin.game.Levels.*;
 import com.mcmullin.game.MyGdxGame;
 
 /**
- * Created by Produit on 4/30/2017.
+ * Created by Jared on 4/30/2017.
  */
 
 public class LoadingScreen implements Screen {
