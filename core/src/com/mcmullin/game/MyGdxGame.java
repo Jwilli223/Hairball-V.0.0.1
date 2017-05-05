@@ -9,7 +9,7 @@ import com.mcmullin.game.Screens.StartScreen;
 
 public class MyGdxGame extends Game {
 	//COMMENTS- Size of the camera view
-	public static final int V_WIDTH = 400;
+	public static final int V_WIDTH = 300;
 	public static final int V_HEIGHT = 240;
 	public static final float PPM = 100;
 	public SpriteBatch batch;

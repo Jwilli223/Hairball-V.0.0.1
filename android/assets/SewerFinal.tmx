@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="900" height="20" tilewidth="12" tileheight="12" nextobjectid="66">
+ <tileset firstgid="1" name="betterBrickSmol" tilewidth="12" tileheight="12" tilecount="55" columns="11">
+  <image source="tunnelPics/betterBrickSmol.jpg" width="140" height="70"/>
+ </tileset>
+ <tileset firstgid="56" name="floorBricksmol" tilewidth="12" tileheight="12" tilecount="11" columns="11">
+  <image source="tunnelPics/floorBricksmol.jpg" width="140" height="21"/>
+ </tileset>
+ <tileset firstgid="67" name="floorBrick" tilewidth="12" tileheight="12" tilecount="1058" columns="46">
+  <image source="tunnelPics/floorBrick.jpg" width="560" height="280"/>
+ </tileset>
+ <tileset firstgid="1125" name="acid25" tilewidth="12" tileheight="12" tilecount="25" columns="5">
+  <image source="tunnelPics/acid25.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="1150" name="Acid225" tilewidth="12" tileheight="12" tilecount="25" columns="5">
+  <image source="tunnelPics/Acid225.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="1175" name="barb" tilewidth="12" tileheight="12" tilecount="28" columns="7">
+  <image source="tunnelPics/barb.png" width="90" height="56"/>
+ </tileset>
+ <layer name="Background" width="900" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt28WBA0EABLHZY2Zm5vzju0rDaz3qpxC6pzHGSq3WWq3XRm3WVm3XTu3WxLIsy7Isy7Isy87G7tV+HdRhHdVxndRpndV5XbAsy7Isy7Isy7Kzspd1Vdd1U7d1V/f1UI/1VM8sy7Isy7Isy7LsrOxLvdZbvddHfdZXfddP/dYfy7Isy7Isy7IsOys7jcXYtbIsy7Isy7Isy7L+gyzLsizLsizLsqz/IMuyLMuyLMuyLOs/yLIsy7Isy7Isy/oPsizLsizLsizLsv6DLMuyLMuyLMuyrP8gy7Isy7Isy7Is6z/IsizLsizLsiy7zHYai7FrZVmWZVmWZVmWZf0HWZZlWZZlWZZlWf9BlmVZlmVZlmVZ1n+QZVmWZVmWZVmW9R9kWZZlWZZlWZZl/QdZlmVZlmVZlmVZ/0GWZVmWZVmWZVnWf5BlWZZlWZZlWXaZ7T/hzy2v
+  </data>
+ </layer>
+ <layer name="platImgs" width="900" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt3ddy00AUxvGN42cBQueOEkDwDPR6T+89N/T6YqG3d6HD54vMBNlerayVfVb7/818F7aV1cl6Buf4GHl5zrnXyhvlrfJOea98UD4qn5TPyhflq7LdObdD2ansUhaV3coeZa9SKPtc3ONSXstq7Vb3K5f6LZ6Pvbdfu9X9Clkr1bpT3/fQtazWbnW/cqnf4vnq7P1+ByDEcs1+EMhR1WvPqMdWXpMWPT9XOF67AAAAMDv0g0C1Ub3bqD4w9D3L1b1i+XEAAABgWugHgWrMBwEAANBF9INANeaDAAAA6CL6QQAAAADIU479INelAgAAAIA8+0EAAAAAwPT6wZgzOeZ76eE5mz2eAwAAAJTV7QcL5/+7EgCsiHVN10l+BgAAIAV1+0GulY/cVc3XQuZwk7ynwnyvvljXdOU6sAAAoKvq9oNcK9+OGN9vEKJLfUiM34XvH0wH80EAAAA/5oPpitF/oL7C8f2DqWA+CAAA4Md88H8pzcKmNR+0wNLzktt80GrtIfUwHwQAAPDjejLxxf7/ZeNMut7qY1Bf4fKaD1qtPaQe5oMAAAB+zAfjiz0/GifFz4uW/z5PUdvzwTN9584q55Tz/eHbF0r3+Y5vutbgceaDs/9dAQAA2vJNPd535YfyU/ml/Fb+KH8V13NuTukp8z3mgyEKF3d+FHu9WX5etDyzTFHh2p0PXlQPdkm5rFzpD9++WrrPd3zTtQaPz2I+GNLDhdTDfBAAAMBvjXq8tco6ZUFZr2xQNiqblM3KFmWrsq3HfDBE7PlRm/OoaevC+wdtf9/ENfVg15Ubys3+8O1bpft8xzdda/B4jO/KqGtlL33/1jAfBAAAaO6AeryDyiHlsHJEOaocU44rJ5STyinlNPPBIIVjPjhOFz4vWrh254O31YPdUe4q9/rDt5dK9/mOb7rWEvPBsfUAAAB0wX31eA+Uh8oj5bHyRHmqPFOeKy+Ul8qrXrO5R8wZShtrWa3d6n6FrJVq3anve+haVmu3ul+51G/xfOy9/dqt7hevVbbrt3i+XPY+9fotnq/O3g/e27biH18hYtg=
+  </data>
+ </layer>
+ <objectgroup name="platforms">
+  <object id="1" x="1018.83" y="167.75" width="242.666" height="58"/>
+  <object id="2" x="145.501" y="109.75" width="94.6667" height="116"/>
+  <object id="3" name="11x1" x="2255.5" y="132.417" width="132" height="12"/>
+  <object id="4" name="11x1" x="1644" y="132" width="132" height="12"/>
+  <object id="5" name="11x1" x="3010.83" y="97.0835" width="132" height="12"/>
+  <object id="6" name="frontWall" x="132.833" y="12.0832" width="12" height="214.666"/>
+  <object id="7" name="11x1" x="3180.16" y="157.083" width="132" height="69.3333"/>
+  <object id="8" x="1261.5" y="191.75" width="70.6667" height="34.6667"/>
+  <object id="9" name="11x1" x="542.5" y="95.9168" width="132" height="12"/>
+  <object id="10" x="1332.58" y="132.166" width="204" height="96"/>
+  <object id="11" x="2424.83" y="14.4168" width="323.333" height="46.6667"/>
+  <object id="12" name="11x1" x="815.333" y="155.083" width="132" height="12"/>
+  <object id="14" name="11x1" x="732.167" y="73.0835" width="132" height="12"/>
+  <object id="15" name="Ceiling" x="130.333" y="0.4165" width="9915" height="12"/>
+  <object id="16" x="2460.16" y="119.083" width="288" height="107.917"/>
+  <object id="17" name="Floor" x="132.666" y="227.583" width="9915" height="12"/>
+  <object id="18" x="3527.5" y="192.417" width="108.667" height="34"/>
+  <object id="20" name="11x1" x="2820.17" y="120.416" width="132" height="12"/>
+  <object id="21" name="frontWall" x="10034.8" y="-119.917" width="12" height="346"/>
+  <object id="22" name="11x1" x="312.833" y="96.4168" width="132" height="12"/>
+  <object id="24" x="3960.83" y="108.417" width="59.8333" height="118"/>
+  <object id="25" name="11x1" x="1849.5" y="94.4165" width="132" height="12"/>
+  <object id="27" x="3745.16" y="109.583" width="119.333" height="116.667"/>
+  <object id="28" x="3636.5" y="157.084" width="108.334" height="70.6667"/>
+  <object id="29" name="11x1" x="2038.83" y="156.416" width="132" height="12"/>
+  <object id="35" x="1871.58" y="180.583" width="47.75" height="47.0833"/>
+ </objectgroup>
+ <layer name="Foreground" width="900" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1vBqAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACANxlPAAE=
+  </data>
+ </layer>
+ <objectgroup name="EOL">
+  <object id="19" name="level end" x="3972.17" y="75.0832" width="36" height="33.3333"/>
+  <object id="13" name="level start" x="170.167" y="76.4172" width="36.6667" height="33.3333"/>
+ </objectgroup>
+ <layer name="RBimgs" width="900" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt3Tlv1EAYBmAX/rW5yJ0lkArInXAEkAgUHAWQIsc/zNtssZNmt7DXk30e6ZU+W1N8GmuKkTyapgEAAAAAAAAAAAAAAAAAGK5vbdNcJ9+TH+28uwEAAKAvP7MH/JX8Tv7YDwIAACyMv9kD/kv+Jzf2gwAAAAvjNnvAu+Q+ebAfBAAAAAAAAAAAAAAAAACAhbXUNs1ystJO1qvJmrPIAADMmbsVoTsvsqbWk412st5Mtqw3AADmzN2K0J3trKmdZLedrPeSkfUGAMCcuVsRuvMya2o/edVO1q+TA+sNAKBX/o18qqu7FcuzUuPnad+vzTi2VMO3rqHHoah1rt6k17fJu+QwOSpqAAD649/I/pRnpcbP077fmnFsqYZvXUOPQ1HrXB2n15PkNDlLzosaAID++DeyP+VZqfHztO9HM44t1fCta+hxKGqdq4v0epm8Tz4kH4saAID+dPVvJE+VZ6XGz9O+P5hxbKmGb11Dj0NR61x9Sq9XyefkS/K1qAEAAAAA4Dl5BGMPlG0=
+  </data>
+ </layer>
+ <objectgroup name="RB">
+  <object id="34" name="pool" x="2748.17" y="192.333" width="431.167" height="35"/>
+  <object id="42" name="pool" x="1536.67" y="191.75" width="333.167" height="35.75"/>
+  <object id="46" name="pool" x="3864.33" y="143" width="95.3333" height="84.6667"/>
+  <object id="58" name="barb" x="453" y="193.5" width="30" height="30">
+   <ellipse/>
+  </object>
+  <object id="61" name="barb" x="619.5" y="62.5" width="30" height="30">
+   <ellipse/>
+  </object>
+  <object id="62" name="barb" x="1280" y="156.5" width="30" height="30">
+   <ellipse/>
+  </object>
+  <object id="63" name="barb" x="2419.5" y="193.5" width="30" height="30">
+   <ellipse/>
+  </object>
+  <object id="64" name="barb" x="1927" y="194" width="30" height="30">
+   <ellipse/>
+  </object>
+  <object id="65" name="barb" x="3320.5" y="194" width="30" height="30">
+   <ellipse/>
+  </object>
+ </objectgroup>
+</map>
