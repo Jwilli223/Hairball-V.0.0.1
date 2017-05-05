@@ -25,13 +25,13 @@
  </layer>
  <layer name="platImgs" width="900" height="20">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <objectgroup name="platforms">
   <object id="1" x="1018.83" y="167.75" width="242.666" height="58"/>
   <object id="2" x="145.501" y="109.75" width="94.6667" height="116"/>
-  <object id="3" name="11x1" x="2255.5" y="132.417" width="132" height="12"/>
+  <object id="3" name="11x1" x="2269" y="155.917" width="132" height="12"/>
   <object id="4" name="11x1" x="1644" y="132" width="132" height="12"/>
   <object id="5" name="11x1" x="3010.83" y="97.0835" width="132" height="12"/>
   <object id="6" name="frontWall" x="132.833" y="12.0832" width="12" height="214.666"/>
