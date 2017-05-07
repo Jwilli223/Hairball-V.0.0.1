@@ -30,10 +30,12 @@ public class PlayScreen implements Screen {
 
     private MyGdxGame game;
     private OrthographicCamera gamecam;
+    //offsets used to calculate camera stopping position (see fct. adjustCam)
+    private float offsetLeft = 3.25f;
+    private float offsetRight = 6.5f;
     private Viewport gamePort;
     private Hud hud;
 
-    private TmxMapLoader maploader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
@@ -55,20 +57,13 @@ public class PlayScreen implements Screen {
         //COMMENTS- Camera set up
         gamecam = new OrthographicCamera();
         gamePort = new ExtendViewport(MyGdxGame.V_WIDTH / MyGdxGame.PPM, MyGdxGame.V_HEIGHT / MyGdxGame.PPM, gamecam);
-        //gamePort = new ExtendViewport(MyGdxGame.V_WIDTH / MyGdxGame.PPM, 0, gamecam);
         hud = new Hud(game.batch, curLevel);
-        //maploader = new TmxMapLoader();
-        //COMMENTS- Load tiled map file here
-        //map = maploader.load(curLevel.getMap());
+        //Load tiled map
         map = game.manager.get(curLevel.getMap(), TiledMap.class);
         this.curLevel = curLevel;
         levelComplete = false;
 
         renderer = new OrthogonalTiledMapRenderer(map, 1 / MyGdxGame.PPM);
-        //gamecam.position.set(gamePort.getWorldWidth() / 2, 1.25f, 0);
-        gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
-        //gamecam.position.y = player.b2body.getPosition().y +.75f;
-        gamecam.update();
         world = new World(new Vector2(0,-10), true);
         b2dr = new Box2DDebugRenderer();
         creator = new B2WorldCreator(this);
@@ -78,9 +73,12 @@ public class PlayScreen implements Screen {
         //set custom touch input as input processor
         input = new TouchInputProcessor();
         Gdx.input.setInputProcessor(input);
-
-        //gamecam.position.y = player.b2body.getPosition().y +.75f;
-        //gamecam.update();
+        //set gamecam limits and starting position
+        float playerX =  player.b2body.getPosition().x;
+        float camStartX = playerX + (gamePort.getWorldWidth() / offsetLeft); //just to the right of jump button
+        float camStartY = gamePort.getWorldHeight() + 1.25f; //full screen
+        gamecam.position.set(camStartX, camStartY, 0);
+        gamecam.update();
     }
 
     @Override
@@ -96,8 +94,10 @@ public class PlayScreen implements Screen {
             }
             // allow for keyboard controls (left and right arrow keys)
             if(Gdx.input.isKeyPressed(22)){
+                adjustCam(RIGHT);
                 player.charRunRight();
             } else if (Gdx.input.isKeyPressed(21)){
+                adjustCam(LEFT);
                 player.charRunLeft();
             }
             if(Gdx.input.isKeyJustPressed(62)) { //jump key pressed
@@ -119,19 +119,9 @@ public class PlayScreen implements Screen {
         hud.update(dt);
         //update level
         curLevel.update(player, dt);
-
-        getPlayerX(dt);
-
-        gamecam.position.x = player.b2body.getPosition().x;
-        gamecam.position.y = player.b2body.getPosition().y +.75f;
-
+        //update camera position -- this is set in through handleInput -> inputAct
         gamecam.update();
         renderer.setView(gamecam);
-    }
-
-    public static float getPlayerX(float dt)
-    {
-        return player.getX();
     }
 
     @Override
@@ -142,19 +132,18 @@ public class PlayScreen implements Screen {
         Gdx.gl.glEnable(GL20.GL_BLEND); //enable transparent images
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         //render
         renderer.render();
-        //b2dr.render(world, gamecam.combined); //box2d debug render - Can uncomment and it shows the box2d debug lines/shapes
+        b2dr.render(world, gamecam.combined); //box2d debug render - Can uncomment and it shows the box2d debug lines/shapes
         game.batch.enableBlending(); //allows multiple tiled tile layers to draw over eachother
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         //render character
-
         player.draw(game.batch);
         //render current level
         curLevel.render(game);
         game.batch.end();
-
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         //draw hud
         hud.stage.draw();
@@ -163,9 +152,9 @@ public class PlayScreen implements Screen {
         if(levelComplete)
             setCurLevel(curLevel.getNextMap());
 
-        //COMMENTS- if the player dies, sets screen to game over, disposes playscreen
+        //If the player dies, sets screen to game over, disposes playscreen
         if(gameOver()) {
-            game.setScreen(new GameOverScreen(game));
+            game.setScreen(new GameOverScreen(game, curLevel.getMap()));
             dispose();
         }
     }
@@ -191,22 +180,8 @@ public class PlayScreen implements Screen {
     //any level. If the given level is null the end screen
     //is shown.
     public void setCurLevel(String level) {
-        if(level.equals("end")) {
-            game.setScreen(new GameOverScreen(game));
-            dispose();
-        } else if(level.equals("SewerLevel2.tmx")) {
-            game.setScreen(new PlayScreen(game, new SewerLevel()));
-            dispose();
-        }else if(level.equals("rubylevel.tmx")) {
-            game.setScreen(new PlayScreen(game, new DinoLevel()));
-            dispose();
-        } else if(level.equals("spacelevel.tmx")) {
-            game.setScreen(new PlayScreen(game, new SpaceLevel()));
-            dispose();
-        } else if(level.equals("corelevel.tmx")) {
-            game.setScreen(new PlayScreen(game, new CoreLevel()));
-            dispose();
-        }
+        ScreenTools.setLevel(game, level);
+        dispose();
     }
 
     //checks the x and y coordinates of the given input
@@ -234,10 +209,11 @@ public class PlayScreen implements Screen {
     //calls actions on the character when input is recieved
     //pointer is the touch input the user would like to check against
     //this assumes that the pointer has valid data attached to it
-    public void inputAct(int pointer, float dt) {
+    private void inputAct(int pointer, float dt) {
         //coordinates of the touch input
         float inX = input.inputX(pointer);
         float inY = input.inputY(pointer);
+
         //check if input should cause an action and call the action
         if(goodPress(inX, inY, UP)) {
             if (stateTime - jumpStartTime >= dt) { //check time between jumps
@@ -245,9 +221,41 @@ public class PlayScreen implements Screen {
                 player.charJump();//jump
             }
         } else if(goodPress(inX, inY, LEFT)) {
+            adjustCam(LEFT);
             player.charRunLeft();
         } else if (goodPress(inX, inY, RIGHT)) {
+            adjustCam(RIGHT);
             player.charRunRight();
+        }
+    }
+
+    //Takes in a direction of movement and adjusts camera position
+    //based on the current location of the player
+    //The camera uses left and right offsets to bound its movement
+    //ensuring it does not overtake the character
+    //When the camera is far from the player (eg when switching running direction)
+    //the camera moves quickly to catch the character, when it is near the character
+    //it simply maintains its distance at the edge of the camera bounds
+    private void adjustCam(int direction) {
+        //Player's current x position
+        float playerX =  player.b2body.getPosition().x;
+        //Calculate stopping position of camera on either side of screen
+        float camRightStop = playerX - (gamePort.getWorldWidth() / offsetRight); //just to the left of buttons
+        float camLeftStop = playerX + (gamePort.getWorldWidth() / offsetLeft); //just to the right of jump
+        //Current position of the camera
+        float camX = gamecam.position.x;
+
+        //Update cam position
+        if(direction == RIGHT) {
+            if (camX < camLeftStop - .05f) //far from position -- catch up
+                gamecam.position.x += .075f;
+            else if (camX <= camLeftStop)
+                gamecam.position.x = camLeftStop;
+        } else if (direction == LEFT){
+            if(camX > camRightStop + .05f) //far from position -- catch up
+                gamecam.position.x -= .075f;
+            else if (camX >= camRightStop)
+                gamecam.position.x = camRightStop;
         }
     }
 

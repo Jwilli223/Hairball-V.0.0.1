@@ -14,10 +14,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mcmullin.game.MyGdxGame;
 import com.mcmullin.game.Screens.PlayScreen;
 import com.mcmullin.game.Sprites.Char;
-import com.mcmullin.game.Sprites.Crater;
 import com.mcmullin.game.Sprites.LevelStart;
+import com.mcmullin.game.Sprites.RoadBlock;
 import com.mcmullin.game.Sprites.levelEnd;
-import com.mcmullin.game.Sprites.BlackHole;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +29,7 @@ public class SpaceLevel extends Level {
     private List<Sprite> RBs;
     public SpaceLevel() {
         this.map = "spacelevel.tmx";
-        this.nextMap = "SewerLevel2.tmx";
+        this.nextMap = "SewerFinal.tmx";
         this.levelName = "The Final Frontier";
         RBs = new ArrayList<Sprite>();
     }
@@ -64,15 +63,9 @@ public class SpaceLevel extends Level {
                         this.start = new LevelStart(rect.getX() / MyGdxGame.PPM, rect.getY() / MyGdxGame.PPM);
                     }
                 }
-            }
-            else if (layer.getName().equals("RB")) {
+            } else if (layer.getName().equals("RB")) {
                 for(MapObject object: layer.getObjects()) {
-                    if(object.getName().equals("bh")) {
-                        RBs.add(new BlackHole(screen, object));
-                    }
-                    else if(object.getName().equals("crater")) {
-                        RBs.add(new Crater(screen, object));
-                    }
+                    RBs.add(new RoadBlock(screen, object));
                 }
             }
         }

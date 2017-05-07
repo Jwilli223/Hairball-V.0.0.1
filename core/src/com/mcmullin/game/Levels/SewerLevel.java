@@ -27,7 +27,7 @@ public class SewerLevel extends Level{
   private List<Sprite> RBs;
 
     public SewerLevel() {
-        this.map = "SewerLevel2.tmx";
+        this.map = "SewerFinal.tmx";
         this.nextMap = "rubylevel.tmx"; //currently last map
         this.levelName = "Dank Sewer";
         RBs = new ArrayList<Sprite>();
@@ -64,9 +64,7 @@ public class SewerLevel extends Level{
                 }
             } else if (layer.getName().equals("RB")) {
                 for(MapObject object: layer.getObjects()) {
-                    if(object.getName().equals("barb")) {
-                        RBs.add(new Barb(screen, object));
-                    }
+                    RBs.add(new RoadBlock(screen, object));
                 }
             }
         }
