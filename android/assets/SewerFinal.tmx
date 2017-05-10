@@ -62,7 +62,7 @@
   </data>
  </layer>
  <objectgroup name="EOL">
-  <object id="19" name="level end" x="3972.17" y="75.0832" width="36" height="33.3333"/>
+  <object id="19" name="level end" x="253.17" y="75.0832" width="36" height="33.3333"/>
   <object id="13" name="level start" x="170.167" y="76.4172" width="36.6667" height="33.3333"/>
  </objectgroup>
  <layer name="RBimgs" width="900" height="20">
