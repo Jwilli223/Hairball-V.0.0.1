@@ -67,7 +67,7 @@
   <object id="31" name="crater" x="2032" y="229" width="95" height="10"/>
  </objectgroup>
  <objectgroup name="EOL">
-  <object id="5" name="level end" x="2322.97" y="161.041" width="62" height="66" rotation="-0.0759387"/>
+  <object id="5" name="level end" x="2319.97" y="159.041" width="62" height="66" rotation="-0.0759387"/>
   <object id="8" name="level start" x="215" y="191" width="47" height="35"/>
  </objectgroup>
 </map>
