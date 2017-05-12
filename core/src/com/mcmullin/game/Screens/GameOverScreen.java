@@ -19,14 +19,15 @@ import com.mcmullin.game.MyGdxGame;
 public class GameOverScreen extends ApplicationAdapter implements Screen {
     private Viewport viewport;
     private Stage stage;
-    private Game game;
+    private MyGdxGame game;
+    private String level;
 
-
-    public GameOverScreen(Game game)
+    public GameOverScreen(MyGdxGame game, String level)
     {
+        this.level = level;
         this.game = game;
         viewport = new StretchViewport(MyGdxGame.V_WIDTH, MyGdxGame.V_HEIGHT, new OrthographicCamera());
-        stage = new Stage(viewport, ((MyGdxGame) game).batch);
+        stage = new Stage(viewport, game.batch);
         Table table = new Table(); //Create a table
         table.center();            //Center the table
         table.setFillParent(true); //Make the table the size of the whole screen
@@ -39,9 +40,7 @@ public class GameOverScreen extends ApplicationAdapter implements Screen {
     }
 
     @Override
-    public void show() {
-
-    }
+    public void show() {}
 
     @Override
     public void render(float delta)
@@ -50,31 +49,24 @@ public class GameOverScreen extends ApplicationAdapter implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if (Gdx.input.justTouched())
         {
-            game.setScreen(new PlayScreen((MyGdxGame) game, new SpaceLevel()));
+            ScreenTools.setLevel(game, level);
+            //game.setScreen(new PlayScreen((MyGdxGame) game, level));
             dispose();
         }
         stage.draw();
     }
 
     @Override
-    public void resize(int width, int height) {
-
-    }
+    public void resize(int width, int height) {}
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() {}
 
     @Override
     public void dispose()

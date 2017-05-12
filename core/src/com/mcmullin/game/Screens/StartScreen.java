@@ -29,7 +29,7 @@ public class StartScreen implements Screen {
         this.game = game;
 
         viewport = new StretchViewport(MyGdxGame.V_WIDTH, MyGdxGame.V_HEIGHT, new OrthographicCamera());
-        stage = new Stage(viewport, ((MyGdxGame) game).batch);
+        stage = new Stage(viewport, game.batch);
 
         Table table = new Table(); //Create a table
         table.center();            //Center the table
