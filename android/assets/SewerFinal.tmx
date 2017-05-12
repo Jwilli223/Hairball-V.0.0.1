@@ -18,6 +18,18 @@
  <tileset firstgid="1175" name="barb" tilewidth="12" tileheight="12" tilecount="28" columns="7">
   <image source="tunnelPics/barb.png" width="90" height="56"/>
  </tileset>
+ <tileset firstgid="1203" name="graffitiCollectedLrg75" tilewidth="12" tileheight="12" tilecount="5478" columns="83">
+  <image source="tunnelPics/graffitiCollectedLrg75.png" width="1000" height="800"/>
+ </tileset>
+ <tileset firstgid="6681" name="graffitiCollectedSml60" tilewidth="12" tileheight="12" tilecount="1650" columns="66">
+  <image source="tunnelPics/graffitiCollectedSml60.png" width="800" height="300"/>
+ </tileset>
+ <tileset firstgid="8331" name="graffitiExt" tilewidth="12" tileheight="12" tilecount="1058" columns="46">
+  <image source="tunnelPics/graffitiExt.png" width="560" height="280"/>
+ </tileset>
+ <tileset firstgid="9389" name="bricksNPipesCollected" tilewidth="12" tileheight="12" tilecount="1681" columns="41">
+  <image source="tunnelPics/bricksNPipesCollected.png" width="500" height="500"/>
+ </tileset>
  <layer name="Background" width="900" height="20">
   <data encoding="base64" compression="zlib">
    eJzt28WBA0EABLHZY2Zm5vzju0rDaz3qpxC6pzHGSq3WWq3XRm3WVm3XTu3WxLIsy7Isy7Isy87G7tV+HdRhHdVxndRpndV5XbAsy7Isy7Isy7Kzspd1Vdd1U7d1V/f1UI/1VM8sy7Isy7Isy7LsrOxLvdZbvddHfdZXfddP/dYfy7Isy7Isy7IsOys7jcXYtbIsy7Isy7Isy7L+gyzLsizLsizLsqz/IMuyLMuyLMuyLOs/yLIsy7Isy7Isy/oPsizLsizLsizLsv6DLMuyLMuyLMuyrP8gy7Isy7Isy7Is6z/IsizLsizLsiy7zHYai7FrZVmWZVmWZVmWZf0HWZZlWZZlWZZlWf9BlmVZlmVZlmVZ1n+QZVmWZVmWZVmW9R9kWZZlWZZlWZZl/QdZlmVZlmVZlmVZ/0GWZVmWZVmWZVnWf5BlWZZlWZZlWXaZ7T/hzy2v
@@ -58,11 +70,11 @@
  </objectgroup>
  <layer name="Foreground" width="900" height="20">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <objectgroup name="EOL">
-  <object id="19" name="level end" x="253.17" y="75.0832" width="36" height="33.3333"/>
+  <object id="19" name="level end" x="3971.17" y="73.0832" width="36" height="33.3333"/>
   <object id="13" name="level start" x="170.167" y="76.4172" width="36.6667" height="33.3333"/>
  </objectgroup>
  <layer name="RBimgs" width="900" height="20">
