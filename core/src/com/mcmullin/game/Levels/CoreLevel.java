@@ -25,7 +25,7 @@ public class CoreLevel extends Level {
     public CoreLevel() {
         this.map = "corelevel.tmx";
         this.nextMap = "end"; //currently last map
-        this.levelName = "The Core";
+        this.levelName = "The Core-Beta";
     }
 
     public void create(PlayScreen screen) {
