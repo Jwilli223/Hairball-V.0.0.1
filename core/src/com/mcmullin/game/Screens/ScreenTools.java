@@ -19,7 +19,7 @@ public class ScreenTools {
             game.setScreen(new PlayScreen(game, new SewerLevel()));
         }else if(level.equals("rubylevel.tmx")) {
             game.setScreen(new PlayScreen(game, new DinoLevel()));
-        } else if(level.equals("spacelevel.tmx")) {
+        } else if(level.equals("spacelevelTEST.tmx")) {
             game.setScreen(new PlayScreen(game, new SpaceLevel()));
         } else if(level.equals("corelevel.tmx")) {
             game.setScreen(new PlayScreen(game, new CoreLevel()));
