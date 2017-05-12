@@ -135,7 +135,7 @@ public class PlayScreen implements Screen {
 
         //render
         renderer.render();
-        b2dr.render(world, gamecam.combined); //box2d debug render - Can uncomment and it shows the box2d debug lines/shapes
+        //b2dr.render(world, gamecam.combined); //box2d debug render - Can uncomment and it shows the box2d debug lines/shapes
         game.batch.enableBlending(); //allows multiple tiled tile layers to draw over eachother
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
