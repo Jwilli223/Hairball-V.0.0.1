@@ -1,5 +1,6 @@
 package com.mcmullin.game.Levels;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -14,18 +15,24 @@ import com.mcmullin.game.MyGdxGame;
 import com.mcmullin.game.Screens.PlayScreen;
 import com.mcmullin.game.Sprites.Char;
 import com.mcmullin.game.Sprites.LevelStart;
+import com.mcmullin.game.Sprites.RoadBlock;
 import com.mcmullin.game.Sprites.levelEnd;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jenni on 5/1/2017.
  */
 
 public class CoreLevel extends Level {
+    private List<Sprite> RBs;
 
     public CoreLevel() {
         this.map = "corelevel.tmx";
         this.nextMap = "end"; //currently last map
-        this.levelName = "The Core-Beta";
+        this.levelName = "The Core";
+        RBs = new ArrayList<Sprite>();
     }
 
     public void create(PlayScreen screen) {
@@ -56,6 +63,11 @@ public class CoreLevel extends Level {
                     } else if (object.getName().equals("level start")) {
                         this.start = new LevelStart(rect.getX() / MyGdxGame.PPM, rect.getY() / MyGdxGame.PPM);
                     }
+                }
+            }
+            else if (layer.getName().equals("RB")) {
+                for(MapObject object: layer.getObjects()) {
+                    RBs.add(new RoadBlock(screen, object));
                 }
             }
         }
