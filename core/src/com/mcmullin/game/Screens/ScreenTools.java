@@ -10,11 +10,11 @@ import com.mcmullin.game.MyGdxGame;
 public class ScreenTools {
     //Sets the screen to the level passed to it
     //this is called when the "EOL" marker is hit in
-    //any level. If the given level is null the end screen
+    //any level. If the given level is null the winner screen
     //is shown.
     public static void setLevel(MyGdxGame game, String level) {
         if(level.equals("end")) {
-            game.setScreen(new GameOverScreen(game, "spacelevel.tmx"));
+            game.setScreen(new WinnerScreen(game));
         } else if(level.equals("SewerFinal.tmx")) {
             game.setScreen(new PlayScreen(game, new SewerLevel()));
         }else if(level.equals("rubylevel.tmx")) {
