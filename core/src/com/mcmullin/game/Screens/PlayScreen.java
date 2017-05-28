@@ -49,19 +49,21 @@ public class PlayScreen implements Screen {
     //The current level
     private Level curLevel;
     private boolean levelComplete;
+    int deaths;
     //Catches touch input from users
     TouchInputProcessor input;
 
-    public PlayScreen(MyGdxGame game, Level curLevel) {
+    public PlayScreen(MyGdxGame game, Level curLevel, int deaths) {
         this.game = game;
         //COMMENTS- Camera set up
         gamecam = new OrthographicCamera();
         gamePort = new ExtendViewport(MyGdxGame.V_WIDTH / MyGdxGame.PPM, MyGdxGame.V_HEIGHT / MyGdxGame.PPM, gamecam);
-        hud = new Hud(game.batch, curLevel);
+        hud = new Hud(game.batch, curLevel, deaths);
         //Load tiled map
         map = game.manager.get(curLevel.getMap(), TiledMap.class);
         this.curLevel = curLevel;
         levelComplete = false;
+        this.deaths = deaths;
 
         renderer = new OrthogonalTiledMapRenderer(map, 1 / MyGdxGame.PPM);
         world = new World(new Vector2(0,-10), true);
@@ -154,7 +156,8 @@ public class PlayScreen implements Screen {
 
         //If the player dies, sets screen to game over, disposes playscreen
         if(gameOver()) {
-            game.setScreen(new GameOverScreen(game, curLevel.getMap()));
+            this.deaths++;
+            game.setScreen(new GameOverScreen(game, curLevel.getMap(), this.deaths));
             dispose();
         }
     }
@@ -180,7 +183,7 @@ public class PlayScreen implements Screen {
     //any level. If the given level is null the end screen
     //is shown.
     public void setCurLevel(String level) {
-        ScreenTools.setLevel(game, level);
+        ScreenTools.setLevel(game, level, 1);
         dispose();
     }
 

@@ -44,7 +44,7 @@ public class Hud implements Disposable {
 
     Integer minutes;
 
-    public Hud(SpriteBatch sb, Level curLevel)
+    public Hud(SpriteBatch sb, Level curLevel, int deaths)
     {
         worldTimer = 0;
         timeCount = 0;
@@ -63,8 +63,8 @@ public class Hud implements Disposable {
         timeLabel = new Label("TIME", new Label.LabelStyle(font, Color.WHITE));
         levelLabel = new Label(levelName, new Label.LabelStyle(font, Color.WHITE));
         worldLabel =new Label("WORLD", new Label.LabelStyle(font, Color.WHITE));
-        hbLabel = new Label("HAIRBALL", new Label.LabelStyle(font, Color.WHITE));
-        placeHolderLabel = new Label("", new Label.LabelStyle(font, Color.WHITE));
+        hbLabel = new Label("HAIRBALLS", new Label.LabelStyle(font, Color.WHITE));
+        placeHolderLabel = new Label(Integer.toString(deaths), new Label.LabelStyle(font, Color.WHITE));
         upImg = new Image(new Texture("JennieAssets/UpButton.png"));
         upImg.setSize(buttonWH, buttonWH);
         leftImg = new Image(new Texture("JennieAssets/LeftButton.png"));
