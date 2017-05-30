@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="900" height="20" tilewidth="12" tileheight="12" nextobjectid="39">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="900" height="20" tilewidth="12" tileheight="12" nextobjectid="44">
  <tileset firstgid="1" name="concrete_tileset" tilewidth="12" tileheight="12" tilecount="30625" columns="175">
   <image source="concrete_tileset.png" width="2100" height="2100"/>
  </tileset>
@@ -28,7 +28,7 @@
  </layer>
  <layer name="platforms" width="900" height="20">
   <data encoding="base64" compression="zlib">
-   eJzt3cdqFVEAgOF5D7u+hx3sKSrY13awr22Jpt7Z2sG+NVVzEwtJVnawgz1Nn8J/I7iQGXLCnTuT/B/8EDJMzsA5izmLzIkiSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSVJWHpSiqI/K1E8DpWo/kfLm82AUfaGv9I2+0w/6SSM0SmM0PljtJ5UkSZKmZnEcRUtoKS2j5bSCVsbVfjL9VcNc1FId1dNG2kSbU+Yo9L6kNRF6LU/jpVk1FEWraQ2tpXW0njZQDdVSHdUPTW0cSZIkqdq28O68lbbRdtpBO2mX+8Hc2M1c7KG9tI/20wE6mDJHofclrYnQa3kaL8099nkd1Eld1E091PvP/q+Pn8vuByVJklRwh3h3PkxH6Cgdo+N0wv1gbpxkLk7RaTpDZ6mBGlPmKPS+pDURei1P46WZNRxFs2kOzaV5NJ8W0EJaNDy1vy9JkiRlqYn342ZqoVZqo3YqxcnXiqgI/x842X3aBX5/kS7RZbpCV+layhyF3he6XkLXUtbjpWlgv9dI5+g8NVEztVArtVE7ldwXSpIkqQCu8358g27SLbpNd+hunHxN+dDBXHRSF3VTD/XS/ZQ5Cr0vdL2ErqWsx5MkSZJmkjLvx/00QA/pET2mJ3HyNeXDU+biGT2nF/SSXtHrlDkKvS90vYSupazHkyRJkmaSN7wfv6V39J4+0Ef6FCdfUz6MMBejNEbjNEG/6HfKHIXeF7peQtdS1uNJkiRJ000lvtnvWRSTE/r9ljRZnzchSZIkqVgq8c1+z6LIh6zPm5AkSZJULJX4Zr9nUeRD1udNSJIkSSqWSnyzf7qdRVFUWZ83IUmSJKlYKvHNfr/nnw9ZnzchSZIkSZIkSZKk//sDrrdI7Q==
+   eJzt3cdu1EAAgGG/Bx3egy7RUwCJfqZL9DMtgdT1lS7Rr6RCNgmgJCe6RJfoKcBT8B85RLYy0Xrt5P+kX4rW8s5KMwfPIZ4okiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRl5VEpivqoTP00QIOlav8q5cmXoSj6St/oO/2gn/SLRmmMxmliqNq/VJIkSZqepXEULaPltIJW0ipaHVf7l6laktZE6LU8jZdmzXAUraV1tJ420EbaRDVUS3VUPzy9cSRJkqRq28az83baQTtpF+2mPe4Hc2Mvc7GP9tMBOkiH6HDKHIXel7QmQq/labw0D9jndVAndVE39VDvf/u/Pv4uux+UJElSwR3h2fkoHaPjdIJO0in3g7lxmrk4Q2fpHJ2nBmpMmaPQ+5LWROi1PI2XZs5IFM2leTSfFtBCWkSLacnI9L5fkiRJylITz8fN1EKt1EbtVIqTrxXRZP8fmDdT3add4vPLdIWu0jW6TjdS5ij0vtD1ErqWsh4vTQP7vUa6QBepiZqphVqpjdqp5L5QkiRJBXCT5+NbdJvu0F26R/fj5GvKhw7mopO6qJt6qJcepsxR6H2h6yV0LWU9niRJkjSblHk+7qcBGqTH9ISexsnXlA/PmIvn9IJe0it6TW9S5ij0vtD1ErqWsh5PkiRJmk3e8nz8jt7TB/pIn+hznHxN+TDKXIzROE3Qb/pDf1PmKPS+0PUSupayHk+SJEmaaSrxzn7Popia0Pe3pKnh/lqqo3raTFtoa8r3ht4nSZIkqVgq8c5+z6LIh6zPm5AkSZJULJV4Z79nUeRD1udNSJIkSSqWSryzf6adRVFUWZ83IUmSJKlYKvHOft/nnw9ZnzchSZIkSZIkSZKkyf0DHow97A==
   </data>
  </layer>
  <layer name="RBimgs" width="900" height="20">
@@ -42,10 +42,22 @@
   <object id="34" name="rock" x="2640" y="41">
    <polygon points="0,0 -28,41 46,41"/>
   </object>
-  <object id="35" name="fire" x="675" y="86" width="63" height="83"/>
-  <object id="36" name="fire" x="1715" y="137" width="61" height="95"/>
-  <object id="37" name="fire" x="2115" y="130" width="65" height="98"/>
+  <object id="35" name="fire" x="675" y="128" width="56" height="41"/>
+  <object id="36" name="fire" x="1715" y="178" width="61" height="54"/>
+  <object id="37" name="fire" x="2120" y="151" width="57" height="77"/>
   <object id="38" name="fire" x="890" y="6" width="66" height="91"/>
+  <object id="39" name="fire" x="691" y="97" width="39" height="40">
+   <ellipse/>
+  </object>
+  <object id="41" name="fire" x="685.5" y="83" width="23" height="27">
+   <ellipse/>
+  </object>
+  <object id="42" name="fire" x="1729.5" y="141" width="39" height="40">
+   <ellipse/>
+  </object>
+  <object id="43" name="fire" x="2137.5" y="132" width="39" height="40">
+   <ellipse/>
+  </object>
  </objectgroup>
  <objectgroup name="EOL">
   <object id="11" name="front wall" x="152" y="0" width="14" height="237"/>
@@ -62,12 +74,12 @@
   <object id="20" name="plat" x="588.5" y="84.5" width="83" height="144"/>
   <object id="21" name="plat" x="1093" y="168" width="82" height="60"/>
   <object id="22" name="plat" x="1212" y="119" width="60" height="13"/>
-  <object id="23" name="plat" x="1307" y="71" width="60" height="12"/>
+  <object id="23" name="plat" x="1307" y="71" width="73" height="12"/>
   <object id="24" name="plat" x="1429" y="84" width="83" height="145"/>
   <object id="27" name="plat" x="1585" y="168" width="83" height="11"/>
   <object id="28" name="plat" x="1704" y="119" width="83" height="13"/>
-  <object id="29" name="plat" x="1850" y="84" width="80" height="145"/>
-  <object id="30" name="plat" x="2017" y="84" width="83" height="145"/>
+  <object id="29" name="plat" x="1850" y="95" width="80" height="134"/>
+  <object id="30" name="plat" x="2017" y="94" width="83" height="135"/>
   <object id="32" name="plat" x="2186" y="84" width="249" height="83"/>
   <object id="33" name="plat" x="2521.5" y="84.5" width="249" height="83"/>
  </objectgroup>

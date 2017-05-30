@@ -3,6 +3,8 @@ package com.mcmullin.game.Screens;
 import com.mcmullin.game.Levels.*;
 import com.mcmullin.game.MyGdxGame;
 
+import static com.badlogic.gdx.scenes.scene2d.InputEvent.Type.exit;
+
 /**
  * Created by Jared on 5/5/2017.
  */
@@ -19,10 +21,13 @@ public class ScreenTools {
             game.setScreen(new PlayScreen(game, new SewerLevel(), deaths));
         }else if(level.equals("rubylevel.tmx")) {
             game.setScreen(new PlayScreen(game, new DinoLevel(), deaths));
-        } else if(level.equals("spacelevelTEST.tmx")) {
+        } else if(level.equals("spacelevelFINAL.tmx")) {
             game.setScreen(new PlayScreen(game, new SpaceLevel(), deaths));
         } else if(level.equals("corelevel.tmx")) {
             game.setScreen(new PlayScreen(game, new CoreLevel(), deaths));
+        }
+        else{
+            game.setScreen(new PlayScreen(game, new SpaceLevel(), deaths));
         }
     }
 }
