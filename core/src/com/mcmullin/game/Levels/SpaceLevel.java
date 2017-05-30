@@ -28,7 +28,7 @@ import java.util.List;
 public class SpaceLevel extends Level {
     private List<Sprite> RBs;
     public SpaceLevel() {
-        this.map = "spacelevelTEST.tmx";
+        this.map = "spacelevelFINAL.tmx";
         this.nextMap = "SewerFinal.tmx";
         this.levelName = "The Final Frontier";
         RBs = new ArrayList<Sprite>();
