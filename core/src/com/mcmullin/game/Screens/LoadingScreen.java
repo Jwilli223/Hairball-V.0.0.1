@@ -73,7 +73,7 @@ public class LoadingScreen implements Screen {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(manager.update()) {
-            ScreenTools.setLevel(game, "spacelevelFINAL.tmx");
+            ScreenTools.setLevel(game, "spacelevelFINAL.tmx", 1);
             //ScreenTools.setLevel(game, "SewerFinal.tmx");
             dispose();
         } else {

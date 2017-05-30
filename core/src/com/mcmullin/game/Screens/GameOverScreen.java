@@ -21,11 +21,13 @@ public class GameOverScreen extends ApplicationAdapter implements Screen {
     private Stage stage;
     private MyGdxGame game;
     private String level;
+    private int deaths;
 
-    public GameOverScreen(MyGdxGame game, String level)
+    public GameOverScreen(MyGdxGame game, String level, int deaths)
     {
         this.level = level;
         this.game = game;
+        this.deaths = deaths;
         viewport = new StretchViewport(MyGdxGame.V_WIDTH, MyGdxGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, game.batch);
         Table table = new Table(); //Create a table
@@ -49,8 +51,7 @@ public class GameOverScreen extends ApplicationAdapter implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if (Gdx.input.justTouched())
         {
-            ScreenTools.setLevel(game, level);
-            //game.setScreen(new PlayScreen((MyGdxGame) game, level));
+            ScreenTools.setLevel(game, level, deaths);
             dispose();
         }
         stage.draw();
