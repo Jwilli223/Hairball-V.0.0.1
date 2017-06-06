@@ -89,7 +89,7 @@ public class Hud implements Disposable {
         table.add(levelLabel).expandX();
         table.add(countdownLabel).expandX();
         //new row
-        table.row().padTop(perHeight * 65).padBottom(perHeight * 2);
+        table.row().padTop(perHeight * 75).padBottom(perHeight * 2);
         table.add(upImg).size(upImg.getWidth(),upImg.getHeight()).padLeft(perWidth * 2);
         table.add(leftImg).size(leftImg.getWidth(),leftImg.getHeight()).padLeft(perWidth * 65);
         table.add(rightImg).size(rightImg.getWidth(),rightImg.getHeight()).padRight(perWidth * 2).padLeft(perWidth * 2);
